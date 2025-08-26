@@ -3,6 +3,12 @@ import {
   IconBusinessplan,
   IconUser,
   IconAlarm,
+  IconServer,
+  IconDatabase,
+  IconBucket,
+  IconTopologyStar3,
+  IconFileTypeCsv,
+  IconFileTypeXls,
 } from "@tabler/icons-react";
 
 const defaultProps = {
@@ -15,4 +21,14 @@ export const Icons = {
   businessplan: (props) => <IconBusinessplan {...defaultProps} {...props} />,
   user: (props) => <IconUser {...defaultProps} {...props} />,
   alarm: (props) => <IconAlarm {...defaultProps} {...props} />,
+
+  // 서비스 아이콘
+  virtualMachine: (props) => <IconServer {...defaultProps} {...props} />,
+  storage: (props) => <IconBucket {...defaultProps} {...props} />,
+  database: (props) => <IconDatabase {...defaultProps} {...props} />,
+  lb: (props) => <IconTopologyStar3 {...defaultProps} {...props} />,
+
+  // Export
+  exportCsv: (props) => <IconFileTypeCsv {...defaultProps} {...props} />,
+  exportXls: (props) => <IconFileTypeXls {...defaultProps} {...props} />,
 };

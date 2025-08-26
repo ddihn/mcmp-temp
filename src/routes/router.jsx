@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { ROUTES } from "./routes";
 import Layout from "../components/layout/Layout";
-import Loading from "../components/common/Loading";
+import Loading from "../components/common/loading/Loading";
 
 const withSuspense = (element) => (
   <Suspense fallback={<Loading fullscreen color="teal" />}>{element}</Suspense>
@@ -22,5 +22,4 @@ export const router = createBrowserRouter([
     path: r.path,
     element: withSuspense(r.element),
   })),
-  { path: "*", element: withSuspense(<div>Page Not Found</div>) },
 ]);
