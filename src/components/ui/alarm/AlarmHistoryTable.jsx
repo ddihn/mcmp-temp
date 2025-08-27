@@ -3,17 +3,21 @@ import Card from "../../common/card/Card";
 
 const AlarmHistoryTable = ({ data }) => {
   const columns = [
-    { key: "date", label: "일시", className: "text-nowrap" },
+    { key: "date", label: "Date", className: "text-nowrap" },
     { key: "csp", label: "CSP", className: "text-nowrap" },
-    { key: "resourceId", label: "리소스 ID", className: "text-nowrap" },
-    { key: "resourceType", label: "리소스 타입", className: "text-nowrap" },
-    { key: "alarmType", label: "알람 종류", className: "text-nowrap" },
-    { key: "alarmMessage", label: "알람 내용" },
-    { key: "recommendType", label: "추천 유형", className: "text-nowrap" },
+    { key: "resourceId", label: "Resource ID", className: "text-nowrap" },
+    { key: "resourceType", label: "Resource Type", className: "text-nowrap" },
+    { key: "alarmType", label: "Alarm Type", className: "text-nowrap" },
+    { key: "alarmMessage", label: "Alarm Message" },
+    {
+      key: "recommendType",
+      label: "Recommendation Type",
+      className: "text-nowrap",
+    },
   ];
 
   return (
-    <Card title={"추천 이력"} titleSize={2} noPadding>
+    <Card title={"Recommendation History"} titleSize={2} noPadding>
       <Table
         columns={columns}
         data={data}

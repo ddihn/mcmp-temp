@@ -23,7 +23,7 @@ export default function BaseInfoCard({ totalAmount, providers }) {
       <div style={{ maxWidth: "550px", margin: "0 auto" }}>
         <div style={{ marginBottom: "12px" }}>
           <div style={styles.totalLabel}>
-            <span style={styles.totalDot}></span>총 금액
+            <span style={styles.totalDot}></span>Total Amount
           </div>
           <div style={styles.totalValue}>{totalAmount}</div>
         </div>

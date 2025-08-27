@@ -32,11 +32,11 @@ export default function InvoiceTable({ invoice }) {
       groupHeader: [
         (value, count, data) => {
           const total = data.reduce((sum, row) => sum + row.bill, 0).toFixed(2);
-          return `CSP: ${value} — ${count}건 / 합계: ${total} USD`;
+          return `CSP: ${value} — ${count} items / Total: ${total} USD`;
         },
         (value, count, data) => {
           const total = data.reduce((sum, row) => sum + row.bill, 0).toFixed(2);
-          return `서비스: ${value} — ${count}건 / 합계: ${total} USD`;
+          return `Service: ${value} — ${count} items / Total: ${total} USD`;
         },
       ],
       columns: [
@@ -45,7 +45,7 @@ export default function InvoiceTable({ invoice }) {
         { title: "Product", field: "productID" },
         { title: "Resource", field: "resourceID" },
         {
-          title: "Billing (USD)",
+          title: "Amount (USD)",
           field: "bill",
           hozAlign: "right",
           sorter: "number",

@@ -6,7 +6,7 @@ export default function TopServicesCard({ data }) {
   const labels = data.map((item) => `${item.resourceNm} (${item.csp})`);
 
   return (
-    <Card title="요금 상위 5개 서비스" titleSize={2}>
+    <Card title="Top 5 Services by Cost" titleSize={2}>
       <PieChart
         series={series}
         labels={labels}

@@ -14,7 +14,7 @@ export default function ServiceCostListCard({ services }) {
   };
 
   return (
-    <Card title="서비스별 누적 비용 현황" titleSize={2}>
+    <Card title="Accumulated cost by Service" titleSize={2}>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {services.map((service, idx) => {
           const Icon =
