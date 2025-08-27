@@ -1,12 +1,13 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { TabulatorFull as Tabulator } from "tabulator-tables";
-import "tabulator-tables/dist/css/tabulator.min.css";
+import "tabulator-tables/dist/css/tabulator.min.css"; // Tabulator 기본 CSS
 import * as XLSX from "xlsx";
-import Card from "../../../common/cards/Card";
-import Button from "../../../common/buttons/Button";
+import Card from "../../../common/card/Card";
+import Button from "../../../common/button/Button";
 import { Icons } from "../../../../icons/Icons";
+import "../../../../index.css";
 
-window.XLSX = XLSX; // Tabulator export 모듈이 전역에서 XLSX를 찾음
+window.XLSX = XLSX;
 
 export default function InvoiceTable({ invoice }) {
   const tableRef = useRef(null);
@@ -25,6 +26,7 @@ export default function InvoiceTable({ invoice }) {
       data: invoice,
       layout: "fitColumns",
       height: "450px",
+      responsiveLayout: "collapse",
       groupBy: ["csp", "productID"],
       groupStartOpen: [true, false],
       groupHeader: [
@@ -48,7 +50,10 @@ export default function InvoiceTable({ invoice }) {
           hozAlign: "right",
           sorter: "number",
           formatter: "money",
-          formatterParams: { symbol: "USD ", precision: 2 },
+          formatterParams: { symbol: "$", precision: 2 },
+          bottomCalc: "sum",
+          bottomCalcFormatter: "money",
+          bottomCalcFormatterParams: { symbol: "$", precision: 2 },
         },
       ],
     });
@@ -69,6 +74,7 @@ export default function InvoiceTable({ invoice }) {
       title="Invoices"
       titleSize={2}
       noBodyWrapper
+      noPadding
       actions={
         <div className="btn-list">
           <Button

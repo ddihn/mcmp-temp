@@ -1018,3 +1018,56 @@ export const InvoiceData = {
     selectedCsps: [],
   },
 };
+
+export const alarmHistoryData = [
+  {
+    date: "2024-10-08",
+    csp: "AWS",
+    resourceId: "i-07ba4df5e27e5d0a2",
+    resourceType: "AmazonEC2",
+    alarmType: "사이즈 변경",
+    alarmMessage:
+      "인스턴스(i-07ba4df5e27e5d0a2)를 기존 타입: c6g.8xlarge에서 추천 타입: c7g.8xlarge으로 변경하는 것을 추천드립니다.",
+    recommendType: "최신화",
+  },
+  {
+    date: "2024-10-08",
+    csp: "AWS",
+    resourceId: "i-0f89759223127d99f",
+    resourceType: "AmazonEC2",
+    alarmType: "사이즈 변경",
+    alarmMessage:
+      "인스턴스(i-0f89759223127d99f)를 기존 타입: t2.medium에서 추천 타입: c6i.large으로 변경하는 것을 추천드립니다.",
+    recommendType: "상향",
+  },
+  {
+    date: "2024-10-08",
+    csp: "AWS",
+    resourceId: "i-0dce57d1fb4de20f9",
+    resourceType: "AmazonEC2",
+    alarmType: "사이즈 변경",
+    alarmMessage:
+      "인스턴스(i-0dce57d1fb4de20f9)를 기존 타입: t2.small에서 추천 타입: t2.micro으로 변경하는 것을 추천드립니다.",
+    recommendType: "하향",
+  },
+  {
+    date: "2024-10-08",
+    csp: "AWS",
+    resourceId: "i-068a979d22dbe093b",
+    resourceType: "AmazonEC2",
+    alarmType: "사이즈 변경",
+    alarmMessage:
+      "인스턴스(i-068a979d22dbe093b)를 기존 타입: t2.micro에서 DownSizing으로 변경하는 것을 추천드립니다.",
+    recommendType: "하향",
+  },
+  {
+    date: "2024-10-07",
+    csp: "AWS",
+    resourceId: "AmazonECR",
+    resourceType: "AmazonECR",
+    alarmType: "비정상",
+    alarmMessage:
+      "지난달 비용(3.39 USD) 대비 이번달 비용(5.74 USD)이 69.36% 발생했습니다.",
+    recommendType: "긴급",
+  },
+];

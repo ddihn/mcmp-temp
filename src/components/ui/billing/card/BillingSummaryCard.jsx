@@ -1,4 +1,4 @@
-import Card from "../../../common/cards/Card";
+import Card from "../../../common/card/Card";
 import Grid from "../../../layout/Grid";
 import BarChart from "../../../common/chart/BarChart";
 import ChangeIndicator from "../../../common/indicator/ChangeIndicator";

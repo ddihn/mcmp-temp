@@ -6,7 +6,7 @@ import { chartData, top5billData, billingAsset } from "../../config/mockData";
 
 export default function HomePage() {
   return (
-    <Grid cols={2} equalHeight>
+    <Grid cols={2} minColWidth={320} equalHeight>
       <BillingSummaryCard chartData={chartData} />
       <TopServicesCard data={top5billData} />
       <ServiceCostListCard services={billingAsset} />

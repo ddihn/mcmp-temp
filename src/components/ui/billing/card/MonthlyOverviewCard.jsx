@@ -1,16 +1,10 @@
-import Card from "../../../common/cards/Card";
+import Card from "../../../common/card/Card";
 import LineChart from "../../../common/chart/LineChart";
 import {
   formatYearMonth,
   pickQuarterMonths,
 } from "../../../../utils/chartUtils";
 
-/**
- * @component MonthlyOverviewCard
- *
- * @description
- * CSP별 최근 12개월 청구금액 추이를 라인 차트로 보여주는 카드.
- */
 export default function MonthlyOverviewCard({ data }) {
   if (!data) return null;
 

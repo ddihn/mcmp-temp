@@ -1,4 +1,4 @@
-import Card from "../../../common/cards/Card";
+import Card from "../../../common/card/Card";
 import { cspColorMap } from "../../../../utils/styles/colors";
 import { baseInfoStyles as styles } from "../../../../utils/styles/cardStyles";
 

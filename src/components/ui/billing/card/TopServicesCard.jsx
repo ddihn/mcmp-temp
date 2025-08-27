@@ -1,4 +1,4 @@
-import Card from "../../../common/cards/Card";
+import Card from "../../../common/card/Card";
 import PieChart from "../../../common/chart/PieChart";
 
 export default function TopServicesCard({ data }) {

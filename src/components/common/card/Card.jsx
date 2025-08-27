@@ -17,6 +17,9 @@
  * @prop {React.ReactNode} [actions]
  *   헤더 우측에 표시할 액션 버튼/아이콘 (옵션)
  *
+ * @prop {boolean} [noPadding=false]
+ *   카드 body의 기본 padding 제거 여부
+ *
  * @prop {React.ReactNode} children
  *   카드 본문(body) 컨텐츠
  */
@@ -25,6 +28,7 @@ export default function Card({
   titleSize = 3,
   span = 1,
   actions,
+  noPadding = false, // 새로 추가
   children,
 }) {
   const TitleTag = `h${titleSize}`;
@@ -55,7 +59,13 @@ export default function Card({
         </div>
       )}
 
-      <div className="card-body" style={{ flex: 1 }}>
+      <div
+        className="card-body"
+        style={{
+          flex: 1,
+          padding: noPadding ? 0 : undefined, // noPadding이면 padding 제거
+        }}
+      >
         {children}
       </div>
     </div>

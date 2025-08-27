@@ -90,7 +90,11 @@ export default function PieChart({
     },
     dataLabels: {
       enabled: true,
-      style: { fontSize: dataLabelFontSize, fontWeight: "bold" },
+      style: {
+        fontSize: dataLabelFontSize,
+        fontWeight: "bold",
+        textShadow: "none",
+      },
       formatter: (val) => val.toFixed(1) + "%",
     },
   };

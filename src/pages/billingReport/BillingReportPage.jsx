@@ -10,7 +10,7 @@ import {
 
 export default function BillingReportPage() {
   return (
-    <Grid cols={2} equalHeight>
+    <Grid cols={2} equalHeight={true}>
       <BaseInfoCard
         totalAmount={baseInfoData.totalAmount}
         providers={baseInfoData.providers}
