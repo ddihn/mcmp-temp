@@ -1,21 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-/**
- * Table Component
- *
- * @param {Array} columns - [{ key: 'name', label: 'Name' }, ...]
- * @param {Array} data - [{ name: 'Paweł Kuna', title: 'UI Designer', ... }]
- * @param {boolean} striped - zebra 효과
- * @param {boolean} hover - hover 시 하이라이트
- * @param {boolean} responsive - 수평 스크롤 가능
- * @param {boolean} nowrap - 줄바꿈 방지
- * @param {boolean} stickyHeader - sticky header
- * @param {string} variant - row 스타일 ("primary", "secondary", "success", ...)
- * @param {boolean} pagination - 페이지네이션 활성화 여부
- * @param {number} pageSize - 페이지당 행 수
- * @param {string} paginationVariant - 페이지네이션 스타일 ("default" | "outline" | "circle" | "text")
- */
 export default function Table({
   columns = [],
   data = [],
@@ -33,6 +18,7 @@ export default function Table({
 
   const totalPages = pagination ? Math.ceil(data.length / pageSize) : 1;
 
+  // ✅ 올바른 pagination 처리
   const paginatedData = pagination
     ? data.slice((currentPage - 1) * pageSize, currentPage * pageSize)
     : data;
@@ -48,7 +34,6 @@ export default function Table({
     setCurrentPage(page);
   };
 
-  // pagination class 설정
   const paginationClasses = clsx("pagination justify-content-center mt-3", {
     "pagination-outline": paginationVariant === "outline",
     "pagination-circle": paginationVariant === "circle",
@@ -71,7 +56,12 @@ export default function Table({
             <tr key={i} className={variant ? `table-${variant}` : ""}>
               {columns.map((col) => (
                 <td key={col.key} className={col.className || ""}>
-                  {row[col.key]}
+                  {/* ✅ fallback 추가 */}
+                  {row[col.key] !== undefined &&
+                  row[col.key] !== null &&
+                  row[col.key] !== ""
+                    ? row[col.key]
+                    : "-"}
                 </td>
               ))}
             </tr>
@@ -80,11 +70,10 @@ export default function Table({
       </table>
 
       {/* 페이지네이션 */}
-      {/* 페이지네이션 */}
       {pagination && totalPages > 1 && (
         <ul
           className={paginationClasses}
-          style={{ marginTop: "1rem", marginBottom: "1rem" }} // 위·아래 여백
+          style={{ marginTop: "1rem", marginBottom: "1rem" }}
         >
           {/* 이전 버튼 */}
           <li className={clsx("page-item", { disabled: currentPage === 1 })}>

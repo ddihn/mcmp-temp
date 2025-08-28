@@ -1,7 +1,8 @@
 // yearMonth -> "Sep 24" 포맷 변환
 export const formatYearMonth = (yearMonth) => {
+  if (!yearMonth || yearMonth.length < 6) return ""; // 방어 코드
   const year = yearMonth.substring(0, 4);
-  const month = parseInt(yearMonth.substring(4), 10);
+  const month = parseInt(yearMonth.substring(4, 6), 10);
   const monthNames = [
     "Jan",
     "Feb",
@@ -21,6 +22,7 @@ export const formatYearMonth = (yearMonth) => {
 
 // 3개월 단위 + 현재 월 포함
 export const pickQuarterMonths = (months, curYear, curMonth) => {
+  if (!Array.isArray(months)) return [];
   const sorted = [...months].sort((a, b) => parseInt(a) - parseInt(b));
   const result = [];
   for (let i = 0; i < sorted.length; i += 3) {
@@ -33,9 +35,16 @@ export const pickQuarterMonths = (months, curYear, curMonth) => {
 
 // 최근 N개월 추출
 export const getLastMonthsData = (monthlyBill, count = 4) => {
-  const sorted = [...monthlyBill].sort(
-    (a, b) => parseInt(a.year + a.month) - parseInt(b.year + b.month)
-  );
+  if (!Array.isArray(monthlyBill)) return [];
+  const sorted = [...monthlyBill].sort((a, b) => {
+    const keyA = a.yearMonth
+      ? parseInt(a.yearMonth)
+      : parseInt((a.year ?? "0") + (a.month ?? "0"));
+    const keyB = b.yearMonth
+      ? parseInt(b.yearMonth)
+      : parseInt((b.year ?? "0") + (b.month ?? "0"));
+    return keyA - keyB;
+  });
   return sorted.slice(-count);
 };
 
@@ -43,13 +52,20 @@ export const getLastMonthsData = (monthlyBill, count = 4) => {
 export const toBarChartData = (monthlyBill, count = 4) => {
   const lastMonths = getLastMonthsData(monthlyBill, count);
   return {
-    categories: lastMonths.map((m) => formatYearMonth(`${m.year}${m.month}`)),
-    series: [{ name: "Bill", data: lastMonths.map((m) => m.bill) }],
+    categories: lastMonths.map((m) => {
+      const ym =
+        m.yearMonth ?? (m.year && m.month ? `${m.year}${m.month}` : null);
+      return ym ? formatYearMonth(ym) : "";
+    }),
+    series: [{ name: "Bill", data: lastMonths.map((m) => m.bill ?? 0) }],
   };
 };
 
 // LineChart용 데이터 변환
 export const toLineChartData = (summaryBill, yearMonths, curYear, curMonth) => {
+  if (!Array.isArray(yearMonths)) return { categories: [], series: [] };
+  if (!Array.isArray(summaryBill)) return { categories: [], series: [] };
+
   const selectedMonths = pickQuarterMonths(yearMonths, curYear, curMonth);
   const categories = selectedMonths.map((ym) => formatYearMonth(ym));
 

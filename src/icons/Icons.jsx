@@ -9,6 +9,10 @@ import {
   IconTopologyStar3,
   IconFileTypeCsv,
   IconFileTypeXls,
+  IconCheck,
+  IconInfoCircle,
+  IconAlertTriangle,
+  IconAlertCircle,
 } from "@tabler/icons-react";
 
 const defaultProps = {
@@ -31,4 +35,10 @@ export const Icons = {
   // Export
   exportCsv: (props) => <IconFileTypeCsv {...defaultProps} {...props} />,
   exportXls: (props) => <IconFileTypeXls {...defaultProps} {...props} />,
+
+  // Alert 상태 아이콘
+  success: (props) => <IconCheck {...defaultProps} {...props} />,
+  info: (props) => <IconInfoCircle {...defaultProps} {...props} />,
+  warning: (props) => <IconAlertTriangle {...defaultProps} {...props} />,
+  danger: (props) => <IconAlertCircle {...defaultProps} {...props} />,
 };

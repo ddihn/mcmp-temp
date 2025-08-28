@@ -11,28 +11,36 @@ function ProviderItem({ name, amount }) {
         />
         {name}
       </div>
-      <div style={styles.providerValue}>{amount}</div>
+      <div style={styles.providerValue}>
+        {`${
+          amount !== null && amount !== undefined ? amount.toFixed(2) : "0.00"
+        } USD`}
+      </div>
     </div>
   );
 }
 
-export default function BaseInfoCard({ totalAmount, providers }) {
+export default function BaseInfoCard({ totalAmount, providers = [] }) {
   return (
     <Card title="Base Info" titleSize={2}>
-      {/* 내부 컨텐츠 maxWidth 제한 */}
       <div style={{ maxWidth: "550px", margin: "0 auto" }}>
         <div style={{ marginBottom: "12px" }}>
           <div style={styles.totalLabel}>
             <span style={styles.totalDot}></span>Total Amount
           </div>
-          <div style={styles.totalValue}>{totalAmount}</div>
+          <div style={styles.totalValue}>
+            {totalAmount !== null && totalAmount !== undefined
+              ? totalAmount.toFixed(2)
+              : "0.00"}{" "}
+            USD
+          </div>
         </div>
 
         <hr style={{ margin: "12px 0", borderColor: "#374151" }} />
 
         <div style={styles.providerWrapper}>
-          {Object.entries(providers).map(([provider, amount]) => (
-            <ProviderItem key={provider} name={provider} amount={amount} />
+          {providers.map((p) => (
+            <ProviderItem key={p.csp} name={p.csp} amount={p.cost} />
           ))}
         </div>
       </div>

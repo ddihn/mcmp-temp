@@ -58,7 +58,7 @@ export default function Grid({ gap = 16, equalHeight = false, children }) {
           }
           /* 화면이 1열일 땐 모든 colSpan을 강제로 1열 전체 차지 */
           .responsive-grid > div {
-            grid-column: span 1 !important;
+            grid-column: span 1;
           }
         }
       `}</style>
