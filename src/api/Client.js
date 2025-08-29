@@ -1,8 +1,18 @@
 import axios from "axios";
 
-const client = axios.create({
-  baseURL: "http://localhost:9090/api/costopti/be",
+const dashboardBaseURL = import.meta.env.VITE_DASHBOARD_API;
+const alertBaseURL = import.meta.env.VITE_ALERT_API;
+
+// costBE API (9090 포트)
+export const dashboardClient = axios.create({
+  baseURL: dashboardBaseURL,
   timeout: 5000,
 });
 
-export default client;
+// Alarm Service API (9000 포트)
+export const alertClient = axios.create({
+  baseURL: alertBaseURL,
+  timeout: 20000,
+});
+
+export default dashboardClient;

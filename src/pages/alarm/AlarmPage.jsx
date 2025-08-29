@@ -3,6 +3,7 @@ import AlarmHistoryTable from "../../components/ui/alarm/AlarmHistoryTable";
 import MailingGuideModal from "../../components/ui/alarm/modal/MailingGuideModal";
 import SlackGuideModal from "../../components/ui/alarm/modal/SlackGuideModal";
 import MailTestModal from "../../components/ui/alarm/modal/MailTestModal";
+import SlackTestButton from "../../components/ui/alarm/SlackTestButton";
 import { getAlarmHistory } from "../../api/alarm/alarm";
 import { useProjectStore } from "../../stores/useProjectStore";
 import Loading from "../../components/common/loading/Loading";
@@ -60,12 +61,9 @@ export default function AlarmPage() {
         <MailingGuideModal />
         <SlackGuideModal />
         <MailTestModal />
+        <SlackTestButton />
       </div>
       <AlarmHistoryTable data={alarmData} />
     </div>
   );
-}
-// import SlackTestButton from "../../components/ui/alarm/SlackTestButton";
-{
-  /* <SlackTestButton /> */
 }

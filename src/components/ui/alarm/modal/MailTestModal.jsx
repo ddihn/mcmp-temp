@@ -3,15 +3,39 @@ import Modal from "../../../common/modal/Modal";
 import Button from "../../../common/button/Button";
 import InputField from "../../../common/input/InputField";
 import Card from "../../../common/card/Card";
+import Alert from "../../../common/alert/Alert";
+import { alertClient } from "../../../../api/Client";
 
 export default function MailTestModal() {
   const [open, setOpen] = useState(false);
   const [to, setTo] = useState("");
   const [title, setTitle] = useState("");
+  const [alert, setAlert] = useState(null);
 
-  const handleSendMail = () => {
-    alert(`메일 발송 대상: ${to}\n제목: ${title}`);
-    setOpen(false);
+  const handleSendMail = async () => {
+    try {
+      const payload = {
+        to: [to],
+        subject: title,
+        message: "테스트 메일입니다.",
+      };
+
+      await alertClient.post("/sendAlertMail", payload);
+      setAlert({
+        variant: "success",
+        title: "성공",
+        message: "메일이 정상적으로 발송되었습니다.",
+      });
+    } catch (err) {
+      console.error("Mail Test Error:", err);
+      setAlert({
+        variant: "danger",
+        title: "실패",
+        message: "메일 발송 중 오류가 발생했습니다.",
+      });
+    } finally {
+      setOpen(false);
+    }
   };
 
   return (
@@ -64,6 +88,18 @@ export default function MailTestModal() {
           />
         </Card>
       </Modal>
+      {alert && (
+        <div className="p-3">
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+            dismissible
+            duration={0}
+            onClose={() => setAlert(null)}
+          />
+        </div>
+      )}
     </>
   );
 }

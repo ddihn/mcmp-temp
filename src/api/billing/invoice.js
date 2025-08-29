@@ -1,4 +1,4 @@
-import client from "../Client";
+import dashboardClient from "../Client";
 import { USE_MOCK } from "../../config/env";
 import {
   baseInfoData,
@@ -11,7 +11,7 @@ export const getBillingBaseInfo = (payload) => {
   if (USE_MOCK) {
     return Promise.resolve({ data: baseInfoData });
   }
-  return client.post("/invoice/getBillingBaseInfo", payload);
+  return dashboardClient.post("/invoice/getBillingBaseInfo", payload);
 };
 
 // 월별 요약 조회
@@ -19,7 +19,7 @@ export const getInvoiceSummary = (payload) => {
   if (USE_MOCK) {
     return Promise.resolve({ data: summaryBillData });
   }
-  return client.post("/invoice/getSummary", payload);
+  return dashboardClient.post("/invoice/getSummary", payload);
   ㄴ;
 };
 
@@ -28,5 +28,5 @@ export const getInvoice = (payload) => {
   if (USE_MOCK) {
     return Promise.resolve({ data: InvoiceData });
   }
-  return client.post("/invoice/getInvoice", payload);
+  return dashboardClient.post("/invoice/getInvoice", payload);
 };

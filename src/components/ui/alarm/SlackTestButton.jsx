@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../common/button/Button";
+import { sendSlackMessage } from "../../../api/alarm/alarm";
+import Alert from "../../common/alert/Alert";
 
 /**
  * @component SlackTestButton
@@ -7,17 +9,54 @@ import Button from "../../common/button/Button";
  * Slack Test 알람 전송 버튼.
  * 클릭 시 API를 호출하여 Slack 채널로 테스트 메시지를 보냅니다.
  *
- * @prop {string} [userId="test"] - 사용자 ID (기본값 "test")
+ * @prop {string} [userId="mcmp-user"] - 사용자 ID (백엔드와 매핑되는 ID)
  */
-export default function SlackTestButton({ userId = "test" }) {
+export default function SlackTestButton({ userId = "mcmp-user" }) {
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
+
+  const handleSlackTest = async () => {
+    try {
+      setLoading(true);
+      await sendSlackMessage({
+        userId,
+        message: "이것은 Slack 테스트 메시지입니다.",
+      });
+      setAlert({
+        variant: "success",
+        title: "성공",
+        message: "Slack 테스트 메시지가 전송되었습니다.",
+      });
+    } catch (err) {
+      console.error("Slack Test Error:", err);
+      setAlert({
+        variant: "danger",
+        title: "실패",
+        message: "Slack 메시지 전송 중 오류가 발생했습니다.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    // <Button variant="secondary" disabled={loading} onClick={handleSlackTest}>
-    //   {loading ? "Sending..." : "Slack Test"}
-    // </Button>
-    <Button variant="secondary" disabled={loading}>
-      {loading ? "Sending..." : "Slack Test"}
-    </Button>
+    <>
+      <Button variant="secondary" disabled={loading} onClick={handleSlackTest}>
+        {loading ? "Sending..." : "Slack Test"}
+      </Button>
+
+      {alert && (
+        <div className="p-3">
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+            dismissible
+            duration={0}
+            onClose={() => setAlert(null)}
+          />
+        </div>
+      )}
+    </>
   );
 }
