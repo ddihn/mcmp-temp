@@ -40,7 +40,11 @@ export default function SlackTestButton({ userId = "mcmp-user" }) {
   };
 
   return (
-    <Button variant="secondary" disabled={loading} onClick={handleSlackTest}>
+    <Button
+      variant="outline-primary"
+      disabled={loading}
+      onClick={handleSlackTest}
+    >
       {loading ? "Sending..." : "Slack Test"}
     </Button>
   );

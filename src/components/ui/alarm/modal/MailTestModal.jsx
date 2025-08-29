@@ -3,15 +3,16 @@ import Modal from "../../../common/modal/Modal";
 import Button from "../../../common/button/Button";
 import InputField from "../../../common/input/InputField";
 import Card from "../../../common/card/Card";
-import Alert from "../../../common/alert/Alert";
+import { useAlertStore } from "../../../../stores/useAlertStore";
 import { alertClient } from "../../../../api/Client";
 
 export default function MailTestModal() {
   const [open, setOpen] = useState(false);
   const [to, setTo] = useState("");
   const [title, setTitle] = useState("");
-  const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const { addAlert } = useAlertStore();
 
   const handleSendMail = async () => {
     try {
@@ -26,14 +27,14 @@ export default function MailTestModal() {
       const res = await alertClient.post("/sendAlertMail", payload);
 
       if (res.data?.status === "fail") {
-        setAlert({
+        addAlert({
           variant: "danger",
           title: "실패",
           message:
             res.data?.error?.Message || "메일 발송 중 오류가 발생했습니다.",
         });
       } else {
-        setAlert({
+        addAlert({
           variant: "success",
           title: "성공",
           message: "메일이 정상적으로 발송되었습니다.",
@@ -41,7 +42,7 @@ export default function MailTestModal() {
       }
     } catch (err) {
       console.error("Mail Test Error:", err);
-      setAlert({
+      addAlert({
         variant: "danger",
         title: "실패",
         message: "메일 발송 중 오류가 발생했습니다.",
@@ -89,7 +90,7 @@ export default function MailTestModal() {
         </p>
         <Card>
           <InputField
-            label="받는 사람"
+            label="Recipient"
             type="text"
             value={to}
             onChange={(e) => setTo(e.target.value)}
@@ -100,7 +101,7 @@ export default function MailTestModal() {
           />
 
           <InputField
-            label="제목"
+            label="Mail Title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -110,17 +111,6 @@ export default function MailTestModal() {
           />
         </Card>
       </Modal>
-
-      {alert && (
-        <div className="p-3">
-          <Alert
-            variant={alert.variant}
-            title={alert.title}
-            message={alert.message}
-            dismissible
-          />
-        </div>
-      )}
     </>
   );
 }
