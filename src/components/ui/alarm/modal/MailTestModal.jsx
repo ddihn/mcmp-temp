@@ -24,7 +24,7 @@ export default function MailTestModal() {
         message: "테스트 메일입니다.",
       };
 
-      const res = await alertClient.post("/sendAlertMail", payload);
+      const res = await sendAlertMail(payload);
 
       if (res.data?.status === "fail") {
         addAlert({

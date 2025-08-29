@@ -17,7 +17,7 @@ export default function MailingGuideModal() {
   const handleSave = async () => {
     try {
       const payload = { username: mailUserId, password: mailAppPassword };
-      await alertClient.post("/insertMailInfo", payload);
+      await insertMailInfo(payload);
       addAlert({
         variant: "success",
         title: "성공",
