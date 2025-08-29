@@ -51,6 +51,7 @@ export default function BillingReportPage() {
 
   if (loading)
     return <Loading fullscreen withLabel label="데이터 불러오는 중..." />;
+
   if (error) {
     return (
       <div className="p-4">
@@ -66,7 +67,7 @@ export default function BillingReportPage() {
   }
 
   return (
-    <Grid cols={2} equalHeight={true}>
+    <Grid cols={2} gap={5} equalHeight>
       {baseInfo && (
         <BaseInfoCard
           totalAmount={baseInfo.reduce((sum, item) => sum + item.cost, 0)}
@@ -74,7 +75,7 @@ export default function BillingReportPage() {
         />
       )}
       {summary && <MonthlyOverviewCard data={summary} />}
-      {invoice && <InvoiceTable invoice={invoice.invoice} colSpan={2} />}
+      {invoice && <InvoiceTable invoice={invoice.invoice} colSpan={12} />}
     </Grid>
   );
 }
