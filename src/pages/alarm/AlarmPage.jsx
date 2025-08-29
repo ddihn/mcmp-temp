@@ -8,6 +8,7 @@ import { getAlarmHistory } from "../../api/alarm/alarm";
 import { useProjectStore } from "../../stores/useProjectStore";
 import Loading from "../../components/common/loading/Loading";
 import Alert from "../../components/common/alert/Alert";
+import AlertProvider from "../../components/common/alert/AlertProvider";
 
 export default function AlarmPage() {
   const { projectId, workspaceId } = useProjectStore();
@@ -41,19 +42,6 @@ export default function AlarmPage() {
 
   if (loading)
     return <Loading fullscreen withLabel label="데이터 불러오는 중..." />;
-  if (error) {
-    return (
-      <div className="p-4">
-        <Alert
-          variant="danger"
-          title="API 에러"
-          message={error}
-          dismissible
-          important
-        />
-      </div>
-    );
-  }
 
   return (
     <div>
@@ -64,6 +52,16 @@ export default function AlarmPage() {
         <SlackTestButton />
       </div>
       <AlarmHistoryTable data={alarmData} />
+      {error && (
+        <Alert
+          variant="danger"
+          title="API 에러"
+          message={error}
+          dismissible
+          onClose={() => setError(null)}
+        />
+      )}
+      <AlertProvider />
     </div>
   );
 }

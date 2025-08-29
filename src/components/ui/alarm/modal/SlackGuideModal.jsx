@@ -7,12 +7,13 @@ import InputField from "../../../common/input/InputField";
 import Card from "../../../common/card/Card";
 import Alert from "../../../common/alert/Alert";
 import { insertSlackToken } from "../../../../api/alarm/alarm";
+import { useAlertStore } from "../../../../stores/useAlertStore";
 
 export default function SlackGuideModal() {
   const [open, setOpen] = useState(false);
   const [slackToken, setSlackToken] = useState("");
   const [channelId, setChannelId] = useState("");
-  const [alert, setAlert] = useState(null);
+  const { addAlert } = useAlertStore();
 
   const handleSave = async () => {
     try {
@@ -23,14 +24,14 @@ export default function SlackGuideModal() {
       };
 
       await insertSlackToken(payload);
-      setAlert({
+      addAlert({
         variant: "success",
         title: "성공",
         message: "Slack Token과 Channel ID가 저장되었습니다.",
       });
     } catch (err) {
       console.error("Insert Slack Token Error:", err);
-      setAlert({
+      addAlert({
         variant: "danger",
         title: "실패",
         message: "Slack Token 저장 중 오류가 발생했습니다.",
@@ -309,19 +310,6 @@ export default function SlackGuideModal() {
           />
         </Card>
       </Modal>
-
-      {alert && (
-        <div className="p-3">
-          <Alert
-            variant={alert.variant}
-            title={alert.title}
-            message={alert.message}
-            dismissible
-            duration={0}
-            onClose={() => setAlert(null)}
-          />
-        </div>
-      )}
     </>
   );
 }

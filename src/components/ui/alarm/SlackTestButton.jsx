@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../common/button/Button";
 import { sendSlackMessage } from "../../../api/alarm/alarm";
-import Alert from "../../common/alert/Alert";
+import { useAlertStore } from "../../../stores/useAlertStore";
 
 /**
  * @component SlackTestButton
@@ -13,7 +13,7 @@ import Alert from "../../common/alert/Alert";
  */
 export default function SlackTestButton({ userId = "mcmp-user" }) {
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState(null);
+  const { addAlert } = useAlertStore();
 
   const handleSlackTest = async () => {
     try {
@@ -22,14 +22,14 @@ export default function SlackTestButton({ userId = "mcmp-user" }) {
         userId,
         message: "이것은 Slack 테스트 메시지입니다.",
       });
-      setAlert({
+      addAlert({
         variant: "success",
         title: "성공",
         message: "Slack 테스트 메시지가 전송되었습니다.",
       });
     } catch (err) {
       console.error("Slack Test Error:", err);
-      setAlert({
+      addAlert({
         variant: "danger",
         title: "실패",
         message: "Slack 메시지 전송 중 오류가 발생했습니다.",
@@ -40,23 +40,8 @@ export default function SlackTestButton({ userId = "mcmp-user" }) {
   };
 
   return (
-    <>
-      <Button variant="secondary" disabled={loading} onClick={handleSlackTest}>
-        {loading ? "Sending..." : "Slack Test"}
-      </Button>
-
-      {alert && (
-        <div className="p-3">
-          <Alert
-            variant={alert.variant}
-            title={alert.title}
-            message={alert.message}
-            dismissible
-            duration={0}
-            onClose={() => setAlert(null)}
-          />
-        </div>
-      )}
-    </>
+    <Button variant="secondary" disabled={loading} onClick={handleSlackTest}>
+      {loading ? "Sending..." : "Slack Test"}
+    </Button>
   );
 }

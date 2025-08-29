@@ -5,30 +5,27 @@ import Button from "../../../common/button/Button";
 import { mailingGuideStyles } from "../../../../utils/styles/guideStyles";
 import InputField from "../../../common/input/InputField";
 import Card from "../../../common/card/Card";
-import Alert from "../../../common/alert/Alert";
+import { useAlertStore } from "../../../../stores/useAlertStore";
 import { alertClient } from "../../../../api/Client";
 
 export default function MailingGuideModal() {
   const [open, setOpen] = useState(false);
   const [mailUserId, setMailUserId] = useState("");
   const [mailAppPassword, setMailAppPassword] = useState("");
-  const [alert, setAlert] = useState(null);
+  const { addAlert } = useAlertStore();
 
   const handleSave = async () => {
     try {
-      const payload = {
-        username: mailUserId,
-        password: mailAppPassword,
-      };
+      const payload = { username: mailUserId, password: mailAppPassword };
       await alertClient.post("/insertMailInfo", payload);
-      setAlert({
+      addAlert({
         variant: "success",
         title: "성공",
         message: "메일 계정 정보가 정상적으로 저장되었습니다.",
       });
     } catch (err) {
       console.error("Insert Mail Info Error:", err);
-      setAlert({
+      addAlert({
         variant: "danger",
         title: "실패",
         message: "메일 계정 정보 저장 중 오류가 발생했습니다.",
@@ -198,17 +195,6 @@ export default function MailingGuideModal() {
           />
         </Card>
       </Modal>
-
-      {alert && (
-        <div className="p-3">
-          <Alert
-            variant={alert.variant}
-            title={alert.title}
-            message={alert.message}
-            dismissible
-          />
-        </div>
-      )}
     </>
   );
 }
