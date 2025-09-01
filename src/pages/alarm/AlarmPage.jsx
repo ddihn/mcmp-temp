@@ -35,7 +35,7 @@ export default function AlarmPage() {
       })
       .catch((err) => {
         console.error("Alarm API Error:", err);
-        setError("알람 내역 데이터를 불러오는 중 오류가 발생했습니다.");
+        setError(err.userMessage);
       })
       .finally(() => setLoading(false));
   }, [projectId, workspaceId]);

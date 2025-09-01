@@ -6,7 +6,7 @@ import { mailingGuideStyles } from "../../../../utils/styles/guideStyles";
 import InputField from "../../../common/input/InputField";
 import Card from "../../../common/card/Card";
 import { useAlertStore } from "../../../../stores/useAlertStore";
-import { alertClient } from "../../../../api/Client";
+import { insertMailInfo } from "../../../../api/alarm/alarm";
 
 export default function MailingGuideModal() {
   const [open, setOpen] = useState(false);

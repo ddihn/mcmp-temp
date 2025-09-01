@@ -1,4 +1,4 @@
-import dashboardClient from "../Client";
+import { dashboardClient } from "../Client";
 import { USE_MOCK } from "../../config/env";
 import { chartData, top5billData, billingAsset } from "../../config/mockData";
 
