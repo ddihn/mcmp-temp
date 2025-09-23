@@ -11,6 +11,7 @@ export default function ServiceCostListCard({ services }) {
     Storage: Icons.storage,
     Database: Icons.database,
     LB: Icons.lb,
+    Others: Icons.others,
   };
 
   return (

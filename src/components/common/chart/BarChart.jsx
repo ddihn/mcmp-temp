@@ -46,17 +46,35 @@ export default function BarChart({
       title: { text: yAxisTitle },
       labels: {
         style: { fontSize: "12px" },
-        formatter: (val) => `${val} USD`,
+        formatter: (val) => `${val.toFixed(2)} USD`,
       },
     },
     plotOptions: {
       bar: {
         borderRadius: 6,
         columnWidth: "50%",
+        dataLabels: {
+          position: "top",
+        },
       },
     },
+    dataLabels: {
+      enabled: true,
+      formatter: (val) => (val === 0 ? "" : `${val.toFixed(2)}`),
+      style: {
+        fontSize: "12px",
+        fontWeight: "bold",
+        colors: ["#4B5563"],
+      },
+      offsetY: -20,
+    },
     colors,
-    tooltip: { theme: "dark" },
+    tooltip: {
+      theme: "dark",
+      y: {
+        formatter: (val) => `${val.toFixed(2)} USD`,
+      },
+    },
     legend: { show: false },
   };
 

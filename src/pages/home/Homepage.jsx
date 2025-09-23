@@ -26,7 +26,7 @@ export default function HomePage() {
     const req = {
       today: new Date().toISOString().slice(0, 10).replace(/-/g, ""),
       selectedProjects: [projectId ?? "mock-proj"],
-      selectedCsps: ["AWS"],
+      selectedCsps: ["AWS", "AZURE", "NCP"],
       selectedWorkspace: workspaceId,
     };
 

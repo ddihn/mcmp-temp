@@ -37,7 +37,7 @@ export default function ChangeIndicator({
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "4px", color }}>
       {Icon && <Icon size={16} stroke={2} color={color} />}
-      <span>
+      <span style={{ fontSize: "1rem", fontWeight: "500" }}>
         {(changePercent ?? 0).toFixed(1)}% ({(changeAmount ?? 0).toFixed(1)}{" "}
         {unit})
       </span>

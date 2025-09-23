@@ -25,7 +25,7 @@ export default function BillingReportPage() {
     const req = {
       today: new Date().toISOString().slice(0, 10).replace(/-/g, ""),
       selectedProjects: [projectId ?? "ns01"],
-      selectedCsps: ["AWS"],
+      selectedCsps: ["AWS", "AZURE", "NCP"],
       selectedWorkspace: workspaceId ?? "ws01",
     };
 
@@ -68,14 +68,12 @@ export default function BillingReportPage() {
 
   return (
     <Grid cols={2} gap={5} equalHeight>
-      {baseInfo && (
-        <BaseInfoCard
-          totalAmount={baseInfo.reduce((sum, item) => sum + item.cost, 0)}
-          providers={baseInfo}
-        />
-      )}
-      {summary && <MonthlyOverviewCard data={summary} />}
-      {invoice && <InvoiceTable invoice={invoice.invoice} colSpan={12} />}
+      <BaseInfoCard
+        totalAmount={baseInfo.reduce((sum, item) => sum + item.cost, 0)}
+        providers={baseInfo}
+      />
+      <MonthlyOverviewCard data={summary} />
+      <InvoiceTable invoice={invoice.invoice} colSpan={12} />
     </Grid>
   );
 }

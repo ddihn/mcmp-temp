@@ -10,7 +10,7 @@ export default function TopServicesCard({ data }) {
       <PieChart
         series={series}
         labels={labels}
-        height={250}
+        height={270}
         donutSize="60%"
         centerValueFontSize="14px"
         centerTotalFontSize="12px"

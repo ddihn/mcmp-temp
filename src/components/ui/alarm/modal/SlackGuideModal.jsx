@@ -26,15 +26,15 @@ export default function SlackGuideModal() {
       await insertSlackToken(payload);
       addAlert({
         variant: "success",
-        title: "성공",
-        message: "Slack Token과 Channel ID가 저장되었습니다.",
+        title: "Success",
+        message: "Slack Token and Channel ID have been saved successfully.",
       });
     } catch (err) {
       console.error("Insert Slack Token Error:", err);
       addAlert({
         variant: "danger",
-        title: "실패",
-        message: "Slack Token 저장 중 오류가 발생했습니다.",
+        title: "Error",
+        message: "An error occurred while saving Slack Token.",
       });
     } finally {
       setOpen(false);
@@ -67,13 +67,15 @@ export default function SlackGuideModal() {
         }
       >
         <p style={slackGuideStyles.guideNote}>
-          본 가이드는 Slack을 통한 알림을 받기만을 위한 과정을 포함하고
-          있습니다. <br />
-          Slack 계정이 존재하지 않을 경우에 대한 회원가입 과정은 포함하지 않고
-          있습니다.
+          This guide covers the process of receiving notifications through Slack
+          only. <br />
+          It does not include the registration process for cases where a Slack
+          account does not exist.
         </p>
 
-        <h2 style={slackGuideStyles.h2}>1. Slack ChatBot 생성 및 권한 설정</h2>
+        <h2 style={slackGuideStyles.h2}>
+          1. Slack ChatBot Creation and Permission Setup
+        </h2>
         <GuideStep
           styles={slackGuideStyles}
           step="1-1."
@@ -81,8 +83,7 @@ export default function SlackGuideModal() {
           alt="Slide 1"
         >
           <p style={slackGuideStyles.comment}>
-            https://api.slack.com 으로 접속하여 <strong>'Your apps'</strong>를
-            클릭합니다.
+            Go to https://api.slack.com and click <strong>'Your apps'</strong>.
           </p>
         </GuideStep>
 
@@ -93,7 +94,7 @@ export default function SlackGuideModal() {
           alt="Slide 2"
         >
           <p style={slackGuideStyles.comment}>
-            <strong>'Create New App'</strong> 버튼을 클릭합니다.
+            Click the <strong>'Create New App'</strong> button.
           </p>
         </GuideStep>
 
@@ -104,7 +105,8 @@ export default function SlackGuideModal() {
           alt="Slide 3"
         >
           <p style={slackGuideStyles.comment}>
-            이후 생성할 앱 세팅은 <strong>'From scratch'</strong>로 선택합니다.
+            Select <strong>'From scratch'</strong> for the app settings to be
+            created.
           </p>
         </GuideStep>
 
@@ -116,12 +118,13 @@ export default function SlackGuideModal() {
         >
           <blockquote style={slackGuideStyles.blockquote}>
             <p style={slackGuideStyles.comment}>
-              <strong>App Name</strong> : 알람을 보내줄 챗 봇 앱의 이름입니다.
+              <strong>App Name</strong> : This is the name of the chatbot app
+              that will send notifications.
             </p>
           </blockquote>
           <p style={slackGuideStyles.comment}>
-            챗봇 앱을 생성할 워크스페이스를 지정한 뒤{" "}
-            <strong>'Create App'</strong>을 클릭합니다.
+            Specify the workspace where you want to create the chatbot app and
+            click <strong>'Create App'</strong>.
           </p>
         </GuideStep>
 
@@ -132,17 +135,19 @@ export default function SlackGuideModal() {
           alt="Slide 5"
         >
           <p style={slackGuideStyles.comment}>
-            Bot 앱이 알림을 보낼 수 있도록 권한을 지정해 주기 위해{" "}
-            <strong>'OAuth & Permissions'</strong>탭에서{" "}
-            <strong>'Scopes'</strong> 영역으로 이동합니다. <br />
+            To grant permissions for the Bot app to send notifications, go to
+            the <strong>'OAuth & Permissions'</strong> tab and navigate to the{" "}
+            <strong>'Scopes'</strong> section. <br />
             <br />
-            <strong>'Add an OAuth Scope'</strong> 버튼을 클릭하고 Bot 앱이
-            알림을 보낼 수 있도록 <strong>'chat:write' 권한을 허용</strong>
-            합니다.
+            Click the <strong>'Add an OAuth Scope'</strong> button and allow the
+            <strong>'chat:write' permission</strong> so the Bot app can send
+            notifications.
           </p>
         </GuideStep>
 
-        <h2 style={slackGuideStyles.h2}>2. Slack 앱 설치 및 토큰 발급</h2>
+        <h2 style={slackGuideStyles.h2}>
+          2. Slack App Installation and Token Generation
+        </h2>
         <GuideStep
           styles={slackGuideStyles}
           step="2-1."
@@ -150,8 +155,8 @@ export default function SlackGuideModal() {
           alt="Slide 6"
         >
           <p style={slackGuideStyles.comment}>
-            지금까지 설정한 앱을 워크스페이스에 설치하기 위해{" "}
-            <strong>'Install to Workspace'</strong>버튼을 클릭합니다.
+            To install the app you've configured so far to your workspace, click
+            the <strong>'Install to Workspace'</strong> button.
           </p>
         </GuideStep>
 
@@ -162,8 +167,8 @@ export default function SlackGuideModal() {
           alt="Slide 7"
         >
           <p style={slackGuideStyles.comment}>
-            생성한 앱이 워크스페이스에 접근하여 설치될 수 있도록 권한을
-            허용해줍니다.
+            Allow permissions for the created app to access and be installed in
+            your workspace.
           </p>
         </GuideStep>
 
@@ -174,14 +179,15 @@ export default function SlackGuideModal() {
           alt="Slide 8"
         >
           <p style={slackGuideStyles.comment}>
-            앱 설치가 완료되면 앱에 대한 <strong>OAuth Token을 발급</strong>{" "}
-            받습니다.
+            Once the app installation is complete, you will{" "}
+            <strong>receive an OAuth Token</strong> for the app.
           </p>
           <blockquote style={slackGuideStyles.blockquote}>
             <p style={slackGuideStyles.comment}>
               <strong>
-                발급 받은 토큰은 MCMP 알림 설정을 위해 마지막 단계에 필요하며
-                토큰이 외부로 노출되지 않도록 주의해야 합니다.
+                The generated token is required for the final step of MCMP
+                notification setup, and care must be taken to ensure the token
+                is not exposed externally.
               </strong>
             </p>
           </blockquote>
@@ -190,59 +196,51 @@ export default function SlackGuideModal() {
         <GuideStep
           styles={slackGuideStyles}
           step="2-4."
-          img="/images/slackGuide/slackIMG09-1.png"
-          alt="Slide 9"
+          img="/images/slackGuide/slackIMG10-1.png"
+          alt="Slide 10"
         >
           <p style={slackGuideStyles.comment}>
-            Slack App을 열고 생성한 워크스페이스, 채널로 이동합니다.
-          </p>
-          <p style={slackGuideStyles.comment}>
-            채널명을 클릭합니다. (예시 : #alarm-channel)
+            Open the Slack App and navigate to the workspace and channel you
+            created, then click the channel name (e.g., #alarm-channel). <br />
+            In the upper right corner, click{" "}
+            <strong>'View all members of this channel'</strong> and then click
+            the <strong>'Add apps'</strong> button in the{" "}
+            <strong>'Integrations'</strong> tab.
           </p>
         </GuideStep>
 
         <GuideStep
           styles={slackGuideStyles}
           step="2-5."
-          img="/images/slackGuide/slackIMG10-1.png"
-          alt="Slide 10"
+          img="/images/slackGuide/slackIMG12.png"
+          alt="Slide 12"
         >
           <p style={slackGuideStyles.comment}>
-            우측 상단에서 <strong>'이 channel의 모든 멤버 보기'</strong>를 누른
-            후 <strong>'통합'</strong> 탭에서 <strong>'앱 추가'</strong> 버튼을
-            클릭합니다.
+            Add the created app to the channel.
           </p>
         </GuideStep>
 
         <GuideStep
           styles={slackGuideStyles}
           step="2-6."
-          img="/images/slackGuide/slackIMG12.png"
-          alt="Slide 12"
-        >
-          <p style={slackGuideStyles.comment}>생성한 앱을 채널에 추가합니다.</p>
-        </GuideStep>
-
-        <GuideStep
-          styles={slackGuideStyles}
-          step="2-7."
           img="/images/slackGuide/slackIMG13.png"
           alt="Slide 13"
         >
           <p style={slackGuideStyles.comment}>
-            채널 정보창으로 돌아와서 <strong>채널 ID</strong>를 확인합니다.
+            Return to the channel information window and check the{" "}
+            <strong>Channel ID</strong>.
           </p>
           <blockquote style={slackGuideStyles.blockquote}>
             <p style={slackGuideStyles.comment}>
               <strong>
-                확인한 채널의 ID는 MCMP 알림 설정을 위해 마지막 단계에
-                필요합니다.
+                The confirmed channel ID is required for the final step of MCMP
+                notification setup.
               </strong>
             </p>
           </blockquote>
         </GuideStep>
 
-        <h2 style={slackGuideStyles.h2}>3. MCMP Slack Alarm 연동</h2>
+        <h2 style={slackGuideStyles.h2}>3. MCMP Slack Alarm Integration</h2>
         <GuideStep
           styles={slackGuideStyles}
           step="3-1."
@@ -250,10 +248,10 @@ export default function SlackGuideModal() {
           alt="Slide 14"
         >
           <p style={slackGuideStyles.comment}>
-            Slack 챗봇 생성 및 토큰 발급 가이드를 열 수 있습니다.
+            You can open the Slack chatbot creation and token generation guide.
           </p>
           <p style={slackGuideStyles.comment}>
-            <strong>발급받은 OAuth Token과 Channel ID를 입력합니다.</strong>
+            <strong>Enter the generated OAuth Token and Channel ID.</strong>
           </p>
         </GuideStep>
 
@@ -264,24 +262,26 @@ export default function SlackGuideModal() {
           alt="Slide 15"
         >
           <p style={slackGuideStyles.comment}>
-            입력한 Token과 Channel ID를 <strong>저장</strong>합니다.
+            <strong>Save</strong> the entered Token and Channel ID.
           </p>
           <p style={slackGuideStyles.comment}>
-            Slack 연동 설정을 끝낸 후 Slack Test 버튼을 통해 알람 테스트를
-            진행할 수 있습니다.
+            After completing the Slack integration setup, you can run alarm
+            tests using the Slack Test button.
           </p>
         </GuideStep>
 
-        <h2 style={slackGuideStyles.h2}>4. MCMP Slack 연동 설정</h2>
+        <h2 style={slackGuideStyles.h2}>4. MCMP Slack Integration Setup</h2>
         <blockquote style={slackGuideStyles.blockquote}>
           <p style={slackGuideStyles.comment}>
-            <strong>2-2 단계</strong>에서 발급 받은 Workspace OAuth Token과{" "}
-            <strong>2-7 단계</strong>에서 확인한 채널 ID를 입력해주세요.
+            Please enter the Workspace OAuth Token generated in{" "}
+            <strong>step 2-2</strong> and the Channel ID confirmed in{" "}
+            <strong>step 2-7</strong>.
           </p>
           <p style={slackGuideStyles.comment}>
             <strong>
-              Slack App Token과 Channel ID는 저장 버튼을 누를 때마다 저장되며 한
-              번 저장한 뒤로 추가로 입력하지 않아도 됩니다.
+              Slack App Token and Channel ID are saved each time you click the
+              save button, and you don't need to enter them again after saving
+              once.
             </strong>
           </p>
         </blockquote>

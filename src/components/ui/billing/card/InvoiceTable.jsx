@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { TabulatorFull as Tabulator } from "tabulator-tables";
 import "tabulator-tables/dist/css/tabulator.min.css"; // Tabulator 기본 CSS
 import * as XLSX from "xlsx";
@@ -14,7 +14,7 @@ export default function InvoiceTable({ invoice }) {
   const tabulatorInstance = useRef(null);
   const today = new Date().toISOString().split("T")[0];
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!tableRef.current) return;
 
     if (tabulatorInstance.current) {
@@ -25,14 +25,13 @@ export default function InvoiceTable({ invoice }) {
     tabulatorInstance.current = new Tabulator(tableRef.current, {
       data: invoice,
       layout: "fitColumns",
-      height: "450px",
       responsiveLayout: "collapse",
       groupBy: ["csp", "productID"],
       groupStartOpen: [true, false],
       groupHeader: [
         (value, count, data) => {
           const total = data.reduce((sum, row) => sum + row.bill, 0).toFixed(2);
-          return `CSP: ${value} — ${count} items / Total: ${total} USD`;
+          return `${value} — ${count} items / Total: ${total} USD`;
         },
         (value, count, data) => {
           const total = data.reduce((sum, row) => sum + row.bill, 0).toFixed(2);
@@ -94,7 +93,7 @@ export default function InvoiceTable({ invoice }) {
         </div>
       }
     >
-      <div ref={tableRef} style={{ width: "100%" }} />
+      <div ref={tableRef} style={{ width: "100%", height: "450px" }} />
     </Card>
   );
 }

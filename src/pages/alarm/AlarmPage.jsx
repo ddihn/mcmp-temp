@@ -6,6 +6,7 @@ import MailTestModal from "../../components/ui/alarm/modal/MailTestModal";
 import SlackTestButton from "../../components/ui/alarm/SlackTestButton";
 import { getAlarmHistory } from "../../api/alarm/alarm";
 import { useProjectStore } from "../../stores/useProjectStore";
+import { transformAlarmData } from "../../utils/historyUtils";
 import Loading from "../../components/common/loading/Loading";
 import Alert from "../../components/common/alert/Alert";
 import AlertProvider from "../../components/common/alert/AlertProvider";
@@ -20,7 +21,7 @@ export default function AlarmPage() {
     if (!projectId || !workspaceId) return;
 
     const req = {
-      selectedCsps: ["AWS"],
+      selectedCsps: ["AWS", "AZURE", "NCP"],
       selectedWorkspace: workspaceId,
       selectedProjects: [projectId ?? "ns01"],
     };
@@ -30,8 +31,11 @@ export default function AlarmPage() {
 
     getAlarmHistory(req)
       .then((res) => {
-        setAlarmData(res.data.Data.alarmHistory || []);
-        console.log(res.data.Data.alarmHistory);
+        const rawData = res.data.Data.alarmHistory || [];
+        const transformedData = transformAlarmData(rawData);
+        setAlarmData(transformedData);
+        console.log("Raw data:", rawData);
+        console.log("Transformed data:", transformedData);
       })
       .catch((err) => {
         console.error("Alarm API Error:", err);

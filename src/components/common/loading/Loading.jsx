@@ -62,7 +62,7 @@ export default function Loading({
     inline
       ? "d-inline-flex align-items-center"
       : "d-flex align-items-center justify-content-center",
-    fullscreen && "vh-100 vw-100 bg-light"
+    fullscreen && "position-fixed top-0 start-0 vh-100 vw-100 bg-light"
   );
 
   if (variant === "dots") {

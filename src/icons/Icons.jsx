@@ -13,6 +13,7 @@ import {
   IconInfoCircle,
   IconAlertTriangle,
   IconAlertCircle,
+  IconDotsCircleHorizontal,
 } from "@tabler/icons-react";
 
 const defaultProps = {
@@ -31,6 +32,7 @@ export const Icons = {
   storage: (props) => <IconBucket {...defaultProps} {...props} />,
   database: (props) => <IconDatabase {...defaultProps} {...props} />,
   lb: (props) => <IconTopologyStar3 {...defaultProps} {...props} />,
+  others: (props) => <IconDotsCircleHorizontal {...defaultProps} {...props} />,
 
   // Export
   exportCsv: (props) => <IconFileTypeCsv {...defaultProps} {...props} />,

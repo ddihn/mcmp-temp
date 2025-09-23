@@ -13,9 +13,9 @@ export default function BillingSummaryCard({ chartData }) {
 
   return (
     <Card title={`Billing Summary (${formatted})`} titleSize={2}>
-      <Grid colWidths={["2fr", "3fr"]} equalHeight>
+      <Grid colWidths={["1.5fr", "2.5fr"]} equalHeight>
         <div>
-          <h2>{curMonthBill.toFixed(3)} USD</h2>
+          <h1>{curMonthBill.toFixed(3)} USD</h1>
           <div>
             Compared to last month
             <ChangeIndicator

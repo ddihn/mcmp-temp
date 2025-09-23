@@ -4,7 +4,7 @@ import Button from "../../../common/button/Button";
 import InputField from "../../../common/input/InputField";
 import Card from "../../../common/card/Card";
 import { useAlertStore } from "../../../../stores/useAlertStore";
-import { alertClient } from "../../../../api/Client";
+import { sendAlertMail } from "../../../../api/alarm/alarm";
 
 export default function MailTestModal() {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function MailTestModal() {
       const payload = {
         to: [to],
         subject: title,
-        message: "테스트 메일입니다.",
+        message: "This is a test email.",
       };
 
       const res = await sendAlertMail(payload);
@@ -29,23 +29,23 @@ export default function MailTestModal() {
       if (res.data?.status === "fail") {
         addAlert({
           variant: "danger",
-          title: "실패",
+          title: "Error",
           message:
-            res.data?.error?.Message || "메일 발송 중 오류가 발생했습니다.",
+            res.data?.error?.Message || "An error occurred while sending the email.",
         });
       } else {
         addAlert({
           variant: "success",
-          title: "성공",
-          message: "메일이 정상적으로 발송되었습니다.",
+          title: "Success",
+          message: "Email has been sent successfully.",
         });
       }
     } catch (err) {
       console.error("Mail Test Error:", err);
       addAlert({
         variant: "danger",
-        title: "실패",
-        message: "메일 발송 중 오류가 발생했습니다.",
+        title: "Error",
+        message: "An error occurred while sending the email.",
       });
     } finally {
       setLoading(false);
@@ -84,9 +84,9 @@ export default function MailTestModal() {
         }
       >
         <p className="text-muted">
-          메일 테스트에서 받는 사람은 한 사람만 지정 가능합니다.
+          Only one recipient can be specified for mail testing.
           <br />
-          메일이 30초 이내에 발송됩니다.
+          The email will be sent within 30 seconds.
         </p>
         <Card>
           <InputField

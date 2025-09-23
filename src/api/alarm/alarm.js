@@ -4,9 +4,9 @@ import { alarmHistoryData } from "../../config/mockData";
 
 // 알림 히스토리 조회
 export const getAlarmHistory = async (req) => {
-  if (USE_MOCK) {
-    return Promise.resolve({ data: alarmHistoryData });
-  }
+  // if (USE_MOCK) {
+  //   return Promise.resolve({ data: alarmHistoryData });
+  // }
   return dashboardClient.post("/alarm/history", req);
 };
 
