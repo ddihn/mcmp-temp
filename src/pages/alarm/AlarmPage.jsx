@@ -45,7 +45,7 @@ export default function AlarmPage() {
   }, [projectId, workspaceId]);
 
   if (loading)
-    return <Loading fullscreen withLabel label="데이터 불러오는 중..." />;
+    return <Loading fullscreen withLabel label="Loading data..." />;
 
   return (
     <div>

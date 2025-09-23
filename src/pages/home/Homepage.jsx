@@ -47,7 +47,7 @@ export default function HomePage() {
   }, [projectId, workspaceId]);
 
   if (loading) {
-    return <Loading fullscreen withLabel label="데이터 불러오는 중..." />;
+    return <Loading fullscreen withLabel label="Loading data..." />;
   }
 
   if (error) {
