@@ -23,6 +23,7 @@
 import HomePage from "../pages/home/HomePage";
 import BillingReportPage from "../pages/billingReport/BillingReportPage";
 import AlarmPage from "../pages/alarm/AlarmPage";
+import BudgetPage from "../pages/budget/BudgetPage";
 import NotFoundPage from "../pages/notFound/NotFoundPage";
 
 export const ROUTES = [
@@ -47,6 +48,14 @@ export const ROUTES = [
     element: <AlarmPage />,
     label: "Alarm",
     icon: "alarm",
+    layout: "app",
+    showInNav: true,
+  },
+  {
+    path: "/budget",
+    element: <BudgetPage />,
+    label: "Budget",
+    icon: "budget",
     layout: "app",
     showInNav: true,
   },

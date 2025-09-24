@@ -14,6 +14,7 @@ import {
   IconAlertTriangle,
   IconAlertCircle,
   IconDotsCircleHorizontal,
+  IconDeviceIpadDollar,
 } from "@tabler/icons-react";
 
 const defaultProps = {
@@ -26,6 +27,7 @@ export const Icons = {
   businessplan: (props) => <IconBusinessplan {...defaultProps} {...props} />,
   user: (props) => <IconUser {...defaultProps} {...props} />,
   alarm: (props) => <IconAlarm {...defaultProps} {...props} />,
+  budget: (props) => <IconDeviceIpadDollar {...defaultProps} {...props} />,
 
   // 서비스 아이콘
   virtualMachine: (props) => <IconServer {...defaultProps} {...props} />,

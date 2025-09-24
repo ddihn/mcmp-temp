@@ -39,7 +39,15 @@ export default function InvoiceTable({ invoice }) {
         },
       ],
       columns: [
-        { title: "CSP", field: "csp" },
+        {
+          title: "CSP",
+          field: "csp",
+          width: 150,
+          formatter: function () {
+            // 그룹화된 테이블에서는 CSP 컬럼을 빈칸으로 처리
+            return "";
+          },
+        },
         { title: "Account ID", field: "accountID" },
         { title: "Product", field: "productID" },
         { title: "Resource", field: "resourceID" },
@@ -50,9 +58,6 @@ export default function InvoiceTable({ invoice }) {
           sorter: "number",
           formatter: "money",
           formatterParams: { symbol: "$", precision: 2 },
-          bottomCalc: "sum",
-          bottomCalcFormatter: "money",
-          bottomCalcFormatterParams: { symbol: "$", precision: 2 },
         },
       ],
     });

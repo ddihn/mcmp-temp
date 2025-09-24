@@ -224,7 +224,8 @@ export const InvoiceData = {
   },
 };
 
-// 알람 이력 데이터 (API 구조와 동일하게 맞춤)
+
+
 export const alarmHistoryData = {
   status: "OK",
   Data: {
