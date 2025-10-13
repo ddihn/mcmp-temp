@@ -1,4 +1,4 @@
-import { dashboardClient, alertClient, USE_MOCK } from "../Client";
+import { alertClient, USE_MOCK, billingClient } from "../Client";
 import { alarmHistoryData } from "../../config/mockData";
 
 // 알림 히스토리 조회
@@ -6,7 +6,7 @@ export const getAlarmHistory = async (req) => {
   if (USE_MOCK) {
     return Promise.resolve({ data: alarmHistoryData });
   }
-  return dashboardClient.post("/alarm/history", req);
+  return billingClient.post("/alarm/history", req);
 };
 
 // 메일 계정/비밀번호 저장

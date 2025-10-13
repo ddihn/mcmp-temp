@@ -76,16 +76,16 @@ export const analyzeBudgetPerformance = (budget, actual) => {
   const difference = actual - budget;
   const achievement = budget > 0 ? (actual / budget) * 100 : 0;
 
-  let status = 'on_track';
-  if (achievement > 110) status = 'over_budget';
-  else if (achievement < 80) status = 'under_budget';
+  let status = "on_track";
+  if (achievement > 110) status = "over_budget";
+  else if (achievement < 80) status = "under_budget";
 
   return {
     difference,
     achievement,
     status,
     isOverBudget: difference > 0,
-    isUnderBudget: difference < 0
+    isUnderBudget: difference < 0,
   };
 };
 
@@ -108,13 +108,101 @@ export const validateBudgetInput = (value) => {
   const numValue = parseFloat(value);
 
   if (isNaN(numValue) || numValue < 0) {
-    return { isValid: false, error: 'Budget must be a positive number' };
-  }
-
-  if (numValue > 1000000) {
-    return { isValid: false, error: 'Budget seems too high' };
+    return { isValid: false, error: "Budget must be a positive number" };
   }
 
   return { isValid: true, value: numValue };
 };
 
+/**
+ * CSP별 통화 반환
+ * @param {string} csp - CSP 이름
+ * @returns {string} 통화 코드 ("USD" | "KRW")
+ */
+export const getCspCurrency = (csp) => {
+  const upperCsp = csp?.toUpperCase();
+  if (upperCsp === "NCP") {
+    return "KRW";
+  }
+  // AWS, Azure, GCP 등은 USD
+  return "USD";
+};
+
+/**
+ * 특정 통화의 총 예산 계산
+ * @param {Object} cspBudgets - CSP별 월별 예산 데이터
+ * @param {string} currency - 통화 코드 ("USD" | "KRW")
+ * @param {number|null} monthIdx - 월 인덱스 (0-11), null이면 전체 합계
+ * @returns {number} 해당 통화의 총 예산
+ */
+export const calculateCurrencyTotal = (cspBudgets, currency, monthIdx = null) => {
+  let total = 0;
+  Object.entries(cspBudgets).forEach(([csp, budgets]) => {
+    if (getCspCurrency(csp) === currency) {
+      if (monthIdx !== null) {
+        total += budgets[monthIdx] || 0;
+      } else {
+        total += calculateCSPTotal(cspBudgets, csp);
+      }
+    }
+  });
+  return total;
+};
+
+/**
+ * API 응답을 UI 형식으로 변환
+ * @param {Array} apiData - [{csp, year, month, budget, currency}, ...]
+ * @returns {Object} {AWS: [budget1, budget2, ...], Azure: [...], NCP: [...]}
+ */
+export const transformApiToUiFormat = (apiData) => {
+  // 기본 CSP 목록을 0으로 초기화
+  const result = {
+    AWS: Array(12).fill(0),
+    Azure: Array(12).fill(0),
+    NCP: Array(12).fill(0),
+  };
+
+  if (!apiData || !Array.isArray(apiData) || apiData.length === 0) {
+    return result;
+  }
+
+  // API 데이터로 채우기 (month는 1-12, 인덱스는 0-11)
+  apiData.forEach((item) => {
+    const csp = item.csp;
+    if (!result[csp]) {
+      result[csp] = Array(12).fill(0);
+    }
+    const monthIndex = item.month - 1;
+    if (monthIndex >= 0 && monthIndex < 12) {
+      result[csp][monthIndex] = item.budget;
+    }
+  });
+
+  return result;
+};
+
+/**
+ * UI 형식을 API 요청 형식으로 변환
+ * @param {Object} cspBudgets - {AWS: [budget1, budget2, ...], Azure: [...], NCP: [...]}
+ * @param {number} year - 연도
+ * @returns {Object} {budgets: [{csp, year, month, budget}, ...]}
+ */
+export const transformUiToApiFormat = (cspBudgets, year) => {
+  const budgets = [];
+
+  Object.entries(cspBudgets).forEach(([csp, monthlyBudgets]) => {
+    monthlyBudgets.forEach((budget, index) => {
+      // 0이 아닌 값만 포함 (선택적)
+      if (budget > 0) {
+        budgets.push({
+          csp,
+          year,
+          month: index + 1, // 인덱스 0-11 -> 월 1-12
+          budget: parseFloat(budget),
+        });
+      }
+    });
+  });
+
+  return { budgets };
+};

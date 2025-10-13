@@ -72,6 +72,18 @@ function createClient(baseURL, timeout = 5000) {
 // costBE API (9090 포트)
 export const dashboardClient = createClient(API_BE_URL, 5000);
 
+// 도메인별 클라이언트 생성 (base path: /api/costopti/be)
+const BASE_PATH = "/api/costopti/be";
+export const billingClient = createClient(`${API_BE_URL}${BASE_PATH}`, 5000);
+export const invoiceClient = createClient(
+  `${API_BE_URL}${BASE_PATH}/invoice`,
+  5000
+);
+export const budgetClient = createClient(
+  `${API_BE_URL}${BASE_PATH}/budget`,
+  5000
+);
+
 // Alarm Service API (9000 포트)
 export const alertClient = createClient(API_ALARM_URL, 20000);
 

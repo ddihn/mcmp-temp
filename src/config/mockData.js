@@ -230,16 +230,31 @@ export const budgetData = {
   Data: {
     year: 2025,
     monthly: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      budget: [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
-      actual: [856, 925, 1150, 979, 832, 946, 1206, 1098, 459, 0, 0, 0]
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      budget: [
+        1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000,
+      ],
+      actual: [856, 925, 1150, 979, 832, 946, 1206, 1098, 459, 0, 0, 0],
     },
     cspBudgets: {
       AWS: [400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400],
       Azure: [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300],
       GCP: [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
-    }
-  }
+    },
+  },
 };
 
 export const alarmHistoryData = {
@@ -256,8 +271,7 @@ export const alarmHistoryData = {
         resource_id: "i-07ba4df5e27e5d0a2",
         resource_type: "AmazonEC2",
         event_type: "사이즈 변경",
-        note:
-          "인스턴스(i-07ba4df5e27e5d0a2)를 기존 타입: c6g.8xlarge에서 추천 타입: c7g.8xlarge으로 변경하는 것을 추천드립니다.",
+        note: "인스턴스(i-07ba4df5e27e5d0a2)를 기존 타입: c6g.8xlarge에서 추천 타입: c7g.8xlarge으로 변경하는 것을 추천드립니다.",
         plan: "최신화",
       },
       {
@@ -266,8 +280,7 @@ export const alarmHistoryData = {
         resource_id: "i-0f89759223127d99f",
         resource_type: "AmazonEC2",
         event_type: "사이즈 변경",
-        note:
-          "인스턴스(i-0f89759223127d99f)를 기존 타입: t2.medium에서 추천 타입: c6i.large으로 변경하는 것을 추천드립니다.",
+        note: "인스턴스(i-0f89759223127d99f)를 기존 타입: t2.medium에서 추천 타입: c6i.large으로 변경하는 것을 추천드립니다.",
         plan: "상향",
       },
       {
@@ -276,8 +289,7 @@ export const alarmHistoryData = {
         resource_id: "i-0dce57d1fb4de20f9",
         resource_type: "AmazonEC2",
         event_type: "사이즈 변경",
-        note:
-          "인스턴스(i-0dce57d1fb4de20f9)를 기존 타입: t2.small에서 추천 타입: t2.micro으로 변경하는 것을 추천드립니다.",
+        note: "인스턴스(i-0dce57d1fb4de20f9)를 기존 타입: t2.small에서 추천 타입: t2.micro으로 변경하는 것을 추천드립니다.",
         plan: "하향",
       },
       {
@@ -286,8 +298,7 @@ export const alarmHistoryData = {
         resource_id: "i-068a979d22dbe093b",
         resource_type: "AmazonEC2",
         event_type: "사이즈 변경",
-        note:
-          "인스턴스(i-068a979d22dbe093b)를 기존 타입: t2.micro에서 DownSizing으로 변경하는 것을 추천드립니다.",
+        note: "인스턴스(i-068a979d22dbe093b)를 기존 타입: t2.micro에서 DownSizing으로 변경하는 것을 추천드립니다.",
         plan: "하향",
       },
       {
@@ -296,10 +307,40 @@ export const alarmHistoryData = {
         resource_id: "AmazonECR",
         resource_type: "AmazonECR",
         event_type: "비정상",
-        note:
-          "지난달 비용(3.39 USD) 대비 이번달 비용(5.74 USD)이 69.36% 발생했습니다.",
+        note: "지난달 비용(3.39 USD) 대비 이번달 비용(5.74 USD)이 69.36% 발생했습니다.",
         plan: "긴급",
       },
     ],
   },
 };
+
+export const mockBudgetData = [
+  {
+    csp: "AWS",
+    year: 2025,
+    month: 1,
+    budget: 400.0,
+    currency: "USD",
+  },
+  {
+    csp: "AWS",
+    year: 2025,
+    month: 2,
+    budget: 450.0,
+    currency: "USD",
+  },
+  {
+    csp: "Azure",
+    year: 2025,
+    month: 1,
+    budget: 300.0,
+    currency: "USD",
+  },
+  {
+    csp: "NCP",
+    year: 2025,
+    month: 1,
+    budget: 550000.0,
+    currency: "KRW",
+  },
+];

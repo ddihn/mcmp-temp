@@ -1,13 +1,13 @@
 import Card from "@/components/common/card/Card";
+import Button from "@/components/common/button/Button";
 import {
   calculateCSPTotal,
-  calculateMonthTotal,
-  calculateYearTotal,
+  calculateCurrencyTotal,
   getCSPColorClass,
   validateBudgetInput,
   MONTH_NAMES,
   getCurrencySymbol,
-  convertCurrency,
+  getCspCurrency,
 } from "@/utils/budgetUtils";
 
 export default function CSPBudgetSettingCard({
@@ -15,13 +15,23 @@ export default function CSPBudgetSettingCard({
   onBudgetChange,
   onSave,
   onReset,
-  currency = "USD",
+  isSaving = false,
 }) {
   if (!cspBudgets) return null;
 
-  const currencySymbol = getCurrencySymbol(currency);
-
   const handleBudgetChange = (csp, monthIndex, value) => {
+    // 빈 값이면 0으로 처리
+    if (value === "" || value === null || value === undefined) {
+      const newBudgets = {
+        ...cspBudgets,
+        [csp]: cspBudgets[csp].map((val, idx) =>
+          idx === monthIndex ? 0 : val
+        ),
+      };
+      onBudgetChange(newBudgets);
+      return;
+    }
+
     const validation = validateBudgetInput(value);
     if (validation.isValid) {
       const newBudgets = {
@@ -50,54 +60,84 @@ export default function CSPBudgetSettingCard({
             </tr>
           </thead>
           <tbody>
-            {Object.entries(cspBudgets).map(([csp, budgets]) => (
-              <tr key={csp}>
-                <td>
-                  <span
-                    className={`badge fs-10 px-2 py-2 ${getCSPColorClass(csp)}`}
-                  >
-                    {csp}
-                  </span>
-                </td>
-                <td className="text-center fw-bold">
-                  {currencySymbol}
-                  {convertCurrency(
-                    calculateCSPTotal(cspBudgets, csp),
-                    currency
+            {Object.entries(cspBudgets).map(([csp, budgets]) => {
+              const cspCurrency = getCspCurrency(csp);
+              const cspCurrencySymbol = getCurrencySymbol(cspCurrency);
+              return (
+                <tr key={csp}>
+                  <td>
+                    <span
+                      className={`badge fs-10 px-2 py-2 ${getCSPColorClass(
+                        csp
+                      )}`}
+                    >
+                      {csp}
+                    </span>
+                  </td>
+                  <td className="text-center fw-bold">
+                    {cspCurrencySymbol}
+                    {calculateCSPTotal(cspBudgets, csp).toLocaleString()}
+                  </td>
+                  {budgets.map((budget, monthIdx) => (
+                    <td key={monthIdx} style={{ width: "80px" }}>
+                      <input
+                        type="text"
+                        className="form-control form-control-sm text-end"
+                        value={budget}
+                        onChange={(e) =>
+                          handleBudgetChange(csp, monthIdx, e.target.value)
+                        }
+                        onKeyDown={(e) => {
+                          // 숫자, Backspace, Delete, Tab, Arrow keys만 허용
+                          if (
+                            !/[0-9]/.test(e.key) &&
+                            ![
+                              "Backspace",
+                              "Delete",
+                              "Tab",
+                              "ArrowLeft",
+                              "ArrowRight",
+                            ].includes(e.key)
+                          ) {
+                            e.preventDefault();
+                          }
+                        }}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+            {/* USD */}
+            <tr className="table-info fw-bold">
+              <td>USD</td>
+              <td className="text-center">
+                ${calculateCurrencyTotal(cspBudgets, "USD").toLocaleString()}
+              </td>
+              {Array.from({ length: 12 }, (_, monthIdx) => (
+                <td key={monthIdx} className="text-center">
+                  $
+                  {calculateCurrencyTotal(
+                    cspBudgets,
+                    "USD",
+                    monthIdx
                   ).toLocaleString()}
                 </td>
-                {budgets.map((budget, monthIdx) => (
-                  <td key={monthIdx} style={{ width: "80px" }}>
-                    <input
-                      type="number"
-                      className="form-control form-control-sm text-end"
-                      value={convertCurrency(budget, currency)}
-                      onChange={(e) =>
-                        handleBudgetChange(csp, monthIdx, e.target.value)
-                      }
-                      min="0"
-                      step={currency === "USD" ? "100" : "100000"}
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
-            {/* Monthly Totals */}
+              ))}
+            </tr>
+            {/* KRW */}
             <tr className="table-info fw-bold">
-              <td>Monthly Total</td>
+              <td>KRW</td>
               <td className="text-center">
-                {currencySymbol}
-                {convertCurrency(
-                  calculateYearTotal(cspBudgets),
-                  currency
-                ).toLocaleString()}
+                ₩{calculateCurrencyTotal(cspBudgets, "KRW").toLocaleString()}
               </td>
-              {Array.from({ length: 12 }, (_, idx) => (
-                <td key={idx} className="text-center">
-                  {currencySymbol}
-                  {convertCurrency(
-                    calculateMonthTotal(cspBudgets, idx),
-                    currency
+              {Array.from({ length: 12 }, (_, monthIdx) => (
+                <td key={monthIdx} className="text-center">
+                  ₩
+                  {calculateCurrencyTotal(
+                    cspBudgets,
+                    "KRW",
+                    monthIdx
                   ).toLocaleString()}
                 </td>
               ))}
@@ -109,12 +149,16 @@ export default function CSPBudgetSettingCard({
       {/* Action Buttons */}
       <div className="mt-3">
         <div className="btn-list">
-          <button className="btn btn-primary" onClick={onSave}>
-            Save Budget
-          </button>
-          <button className="btn btn-outline-secondary" onClick={onReset}>
+          <Button variant="primary" onClick={onSave} disabled={isSaving}>
+            {isSaving ? "Saving..." : "Save Budget"}
+          </Button>
+          <Button
+            variant="outline-secondary"
+            onClick={onReset}
+            disabled={isSaving}
+          >
             Reset
-          </button>
+          </Button>
         </div>
       </div>
     </Card>
