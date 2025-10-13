@@ -1,23 +1,11 @@
+import { MONTH_NAMES } from "../constants/dateConstants";
+
 // yearMonth -> "Sep 24" 포맷 변환
 export const formatYearMonth = (yearMonth) => {
   if (!yearMonth || yearMonth.length < 6) return ""; // 방어 코드
   const year = yearMonth.substring(0, 4);
   const month = parseInt(yearMonth.substring(4, 6), 10);
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  return `${monthNames[month - 1]} ${year.slice(2)}`;
+  return `${MONTH_NAMES[month - 1]} ${year.slice(2)}`;
 };
 
 // 3개월 단위 + 현재 월 포함

@@ -3,6 +3,8 @@
  * @description Alarm History 관련 유틸리티 함수들
  */
 
+import { logger } from "./logger";
+
 /**
  * ISO 날짜 문자열을 읽기 쉬운 형식으로 변환
  * @param {string} isoDateString - "2025-09-23T14:21:57" 형식의 날짜
@@ -21,7 +23,7 @@ export const formatOccureTime = (isoDateString) => {
 
     return `${year}-${month}-${day} ${hour}:${minute}`;
   } catch (error) {
-    console.error("Date formatting error:", error);
+    logger.error("Date formatting error:", error);
     return isoDateString; // 에러 시 원본 반환
   }
 };

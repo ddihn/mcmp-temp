@@ -1,5 +1,39 @@
 import axios from "axios";
 import { ERROR_MESSAGES } from "../constants/errorMessages";
+import { logger } from "../utils/logger";
+
+// 동적으로 API URL 및 Mock 모드 생성 (도메인 기반)
+function getApiConfig() {
+  const hostname = window.location.hostname;
+  console.log("도메인 확인: " + hostname);
+  const isNumericAndDotsOnly = /^[0-9.]+$/.test(hostname);
+
+  let API_BE_URL = "";
+  let API_ALARM_URL = "";
+  let USE_MOCK = false;
+
+  if (hostname.includes("localhost")) {
+    API_BE_URL = `http://${hostname}:9090`;
+    API_ALARM_URL = `http://${hostname}:9000`;
+    USE_MOCK = true; // localhost는 mock 사용
+  } else if (isNumericAndDotsOnly) {
+    API_BE_URL = `http://${hostname}:9090`;
+    API_ALARM_URL = `http://${hostname}:9000`;
+    USE_MOCK = false; // IP는 실제 API 사용
+  } else {
+    API_BE_URL = `https://${hostname}`;
+    API_ALARM_URL = `https://${hostname}`;
+    USE_MOCK = false; // 도메인은 실제 API 사용
+  }
+
+  console.log("API_BE_URL:", API_BE_URL);
+  console.log("API_ALARM_URL:", API_ALARM_URL);
+  console.log("USE_MOCK:", USE_MOCK);
+
+  return { API_BE_URL, API_ALARM_URL, USE_MOCK };
+}
+
+const { API_BE_URL, API_ALARM_URL, USE_MOCK } = getApiConfig();
 
 function createClient(baseURL, timeout = 5000) {
   const client = axios.create({ baseURL, timeout });
@@ -25,8 +59,8 @@ function createClient(baseURL, timeout = 5000) {
         raw: error,
       };
 
-      // 콘솔에서는 상세 확인 가능
-      console.error(`[API Error] ${status} ${mapping.code}`, error);
+      // Production에서도 표시 (logger.error는 항상 출력)
+      logger.error(`[API Error] ${status} ${mapping.code}`, error);
 
       return Promise.reject(formattedError);
     }
@@ -34,10 +68,12 @@ function createClient(baseURL, timeout = 5000) {
 
   return client;
 }
+
 // costBE API (9090 포트)
-export const dashboardClient = createClient(
-  import.meta.env.VITE_DASHBOARD_API,
-  5000
-);
+export const dashboardClient = createClient(API_BE_URL, 5000);
+
 // Alarm Service API (9000 포트)
-export const alertClient = createClient(import.meta.env.VITE_ALERT_API, 20000);
+export const alertClient = createClient(API_ALARM_URL, 20000);
+
+// Mock 모드 export (API 파일들에서 사용)
+export { USE_MOCK };

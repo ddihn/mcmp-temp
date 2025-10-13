@@ -1,10 +1,11 @@
 import { useState } from "react";
-import Modal from "../../../common/modal/Modal";
-import Button from "../../../common/button/Button";
-import InputField from "../../../common/input/InputField";
-import Card from "../../../common/card/Card";
-import { useAlertStore } from "../../../../stores/useAlertStore";
-import { sendAlertMail } from "../../../../api/alarm/alarm";
+import Modal from "@/components/common/modal/Modal";
+import Button from "@/components/common/button/Button";
+import InputField from "@/components/common/input/InputField";
+import Card from "@/components/common/card/Card";
+import { useAlertStore } from "@/stores/useAlertStore";
+import { sendAlertMail } from "@/api/alarm/alarm";
+import { logger } from "@/utils/logger";
 
 export default function MailTestModal() {
   const [open, setOpen] = useState(false);
@@ -41,7 +42,7 @@ export default function MailTestModal() {
         });
       }
     } catch (err) {
-      console.error("Mail Test Error:", err);
+      logger.error("Mail Test Error:", err);
       addAlert({
         variant: "danger",
         title: "Error",

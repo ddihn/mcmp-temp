@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Button from "../../common/button/Button";
-import { sendSlackMessage } from "../../../api/alarm/alarm";
-import { useAlertStore } from "../../../stores/useAlertStore";
+import Button from "@/components/common/button/Button";
+import { sendSlackMessage } from "@/api/alarm/alarm";
+import { useAlertStore } from "@/stores/useAlertStore";
+import { logger } from "@/utils/logger";
 
 /**
  * @component SlackTestButton
@@ -28,7 +29,7 @@ export default function SlackTestButton({ userId = "mcmp-user" }) {
         message: "Slack 테스트 메시지가 전송되었습니다.",
       });
     } catch (err) {
-      console.error("Slack Test Error:", err);
+      logger.error("Slack Test Error:", err);
       addAlert({
         variant: "danger",
         title: "실패",

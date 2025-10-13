@@ -1,6 +1,6 @@
-import Card from "../../../common/card/Card";
-import { cspColorMap } from "../../../../utils/styles/colors";
-import { baseInfoStyles as styles } from "../../../../utils/styles/cardStyles";
+import Card from "@/components/common/card/Card";
+import { cspColorMap } from "@/utils/styles/colors";
+import { baseInfoStyles as styles } from "@/utils/styles/cardStyles";
 
 function ProviderItem({ name, amount }) {
   return (

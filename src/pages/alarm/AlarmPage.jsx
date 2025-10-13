@@ -1,48 +1,14 @@
-import { useEffect, useState } from "react";
-import AlarmHistoryTable from "../../components/ui/alarm/AlarmHistoryTable";
-import MailingGuideModal from "../../components/ui/alarm/modal/MailingGuideModal";
-import SlackGuideModal from "../../components/ui/alarm/modal/SlackGuideModal";
-import MailTestModal from "../../components/ui/alarm/modal/MailTestModal";
-import SlackTestButton from "../../components/ui/alarm/SlackTestButton";
-import { getAlarmHistory } from "../../api/alarm/alarm";
-import { useProjectStore } from "../../stores/useProjectStore";
-import { transformAlarmData } from "../../utils/historyUtils";
-import Loading from "../../components/common/loading/Loading";
-import Alert from "../../components/common/alert/Alert";
-import AlertProvider from "../../components/common/alert/AlertProvider";
+import AlarmHistoryTable from "./components/AlarmHistoryTable";
+import MailingGuideModal from "./components/modals/MailingGuideModal";
+import SlackGuideModal from "./components/modals/SlackGuideModal";
+import MailTestModal from "./components/modals/MailTestModal";
+import SlackTestButton from "./components/SlackTestButton";
+import Loading from "@/components/common/loading/Loading";
+import AlertProvider from "@/components/common/alert/AlertProvider";
+import { useAlarmHistory } from "@/hooks/useAlarmHistory";
 
 export default function AlarmPage() {
-  const { projectId, workspaceId } = useProjectStore();
-  const [alarmData, setAlarmData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (!projectId || !workspaceId) return;
-
-    const req = {
-      selectedCsps: ["AWS", "AZURE", "NCP"],
-      selectedWorkspace: workspaceId,
-      selectedProjects: [projectId ?? "ns01"],
-    };
-
-    setLoading(true);
-    setError(null);
-
-    getAlarmHistory(req)
-      .then((res) => {
-        const rawData = res.data.Data.alarmHistory || [];
-        const transformedData = transformAlarmData(rawData);
-        setAlarmData(transformedData);
-        console.log("Raw data:", rawData);
-        console.log("Transformed data:", transformedData);
-      })
-      .catch((err) => {
-        console.error("Alarm API Error:", err);
-        setError(err.userMessage);
-      })
-      .finally(() => setLoading(false));
-  }, [projectId, workspaceId]);
+  const { alarmData, loading } = useAlarmHistory();
 
   if (loading)
     return <Loading fullscreen withLabel label="Loading data..." />;
@@ -56,15 +22,6 @@ export default function AlarmPage() {
         <SlackTestButton />
       </div>
       <AlarmHistoryTable data={alarmData} />
-      {error && (
-        <Alert
-          variant="danger"
-          title="API 에러"
-          message={error}
-          dismissible
-          onClose={() => setError(null)}
-        />
-      )}
       <AlertProvider />
     </div>
   );

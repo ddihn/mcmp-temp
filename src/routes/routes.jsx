@@ -20,7 +20,7 @@
  * @prop {boolean} showInNav
  *   네비게이션 바 메뉴에 표시할지 여부.
  */
-import HomePage from "../pages/home/HomePage";
+import HomePage from "../pages/home/Homepage";
 import BillingReportPage from "../pages/billingReport/BillingReportPage";
 import AlarmPage from "../pages/alarm/AlarmPage";
 import BudgetPage from "../pages/budget/BudgetPage";

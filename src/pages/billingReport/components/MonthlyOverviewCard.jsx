@@ -1,9 +1,9 @@
-import Card from "../../../common/card/Card";
-import LineChart from "../../../common/chart/LineChart";
+import Card from "@/components/common/card/Card";
+import LineChart from "@/components/common/chart/LineChart";
 import {
   formatYearMonth,
   pickQuarterMonths,
-} from "../../../../utils/chartUtils";
+} from "@/utils/chartUtils";
 
 export default function MonthlyOverviewCard({ data }) {
   if (!data) return null;

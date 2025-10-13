@@ -1,9 +1,9 @@
-import Card from "../../../common/card/Card";
-import { Icons } from "../../../../icons/Icons";
+import Card from "@/components/common/card/Card";
+import { Icons } from "@/icons/Icons";
 import {
   serviceItemStyle,
   serviceIconBoxStyle,
-} from "../../../../utils/styles/cardStyles";
+} from "@/utils/styles/cardStyles";
 
 export default function ServiceCostListCard({ services }) {
   const iconMap = {

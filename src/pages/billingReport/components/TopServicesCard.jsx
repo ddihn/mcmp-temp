@@ -1,5 +1,5 @@
-import Card from "../../../common/card/Card";
-import PieChart from "../../../common/chart/PieChart";
+import Card from "@/components/common/card/Card";
+import PieChart from "@/components/common/chart/PieChart";
 
 export default function TopServicesCard({ data }) {
   const series = data.map((item) => item.bill);

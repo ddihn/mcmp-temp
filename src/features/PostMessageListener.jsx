@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useProjectStore } from "../stores/useProjectStore";
+import { logger } from "@/utils/logger";
 
 export default function PostMessageListener() {
   const setWorkspace = useProjectStore((s) => s.setWorkspace);
@@ -8,7 +9,7 @@ export default function PostMessageListener() {
 
   useEffect(() => {
     function handleMessage(event) {
-      console.log("message received:", event);
+      logger.debug("message received:", event);
 
       if (event.data && event.data.accessToken) {
         setWorkspace(
@@ -22,7 +23,7 @@ export default function PostMessageListener() {
         );
         setUserToken(event.data.accessToken);
       } else {
-        console.warn("프로젝트 코드가 없어서 임시 값 적용");
+        logger.warn("프로젝트 코드가 없어서 임시 값 적용");
         setWorkspace("ws01", "testWs");
         setProject("ns01", "mock-uuid", "undefined");
         setUserToken("Null");

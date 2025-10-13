@@ -1,12 +1,13 @@
 import { useState } from "react";
-import Modal from "../../../common/modal/Modal";
-import GuideStep from "../../../common/guide/GuideStep";
-import Button from "../../../common/button/Button";
-import { mailingGuideStyles } from "../../../../utils/styles/guideStyles";
-import InputField from "../../../common/input/InputField";
-import Card from "../../../common/card/Card";
-import { useAlertStore } from "../../../../stores/useAlertStore";
-import { insertMailInfo } from "../../../../api/alarm/alarm";
+import Modal from "@/components/common/modal/Modal";
+import GuideStep from "@/components/common/guide/GuideStep";
+import Button from "@/components/common/button/Button";
+import { mailingGuideStyles } from "@/utils/styles/guideStyles";
+import InputField from "@/components/common/input/InputField";
+import Card from "@/components/common/card/Card";
+import { useAlertStore } from "@/stores/useAlertStore";
+import { insertMailInfo } from "@/api/alarm/alarm";
+import { logger } from "@/utils/logger";
 
 export default function MailingGuideModal() {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function MailingGuideModal() {
         message: "Mail account information has been saved successfully.",
       });
     } catch (err) {
-      console.error("Insert Mail Info Error:", err);
+      logger.error("Insert Mail Info Error:", err);
       addAlert({
         variant: "danger",
         title: "Error",

@@ -1,5 +1,5 @@
-import Table from "../../../components/common/table/Table";
-import Card from "../../common/card/Card";
+import Table from "@/components/common/table/Table";
+import Card from "@/components/common/card/Card";
 
 const AlarmHistoryTable = ({ data }) => {
   const columns = [

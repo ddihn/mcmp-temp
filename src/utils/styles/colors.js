@@ -1,3 +1,5 @@
+import { cspColorMap as cspColorMapFromConstants } from "../../constants/cspConstants";
+
 export const chartColors = {
   default: [
     "#3B82F6", // Blue (총 금액 등 기본 강조)
@@ -14,10 +16,8 @@ export const chartColors = {
   },
 };
 
-export const cspColorMap = {
-  AWS: "#F59E0B", // Yellow
-  GCP: "#10B981", // Green
-  AZURE: "#3B82F6", // Blue
-  NCP: "#8B5CF6", // Purple
-  OTHERS: "#6B7280", // Gray
-};
+/**
+ * CSP별 색상 맵
+ * @deprecated cspConstants.js에서 중앙 관리됨. cspConstants.cspColorMap 사용 권장
+ */
+export const cspColorMap = cspColorMapFromConstants;

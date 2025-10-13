@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import Modal from "../../../common/modal/Modal";
-import GuideStep from "../../../common/guide/GuideStep";
-import Button from "../../../common/button/Button";
-import { slackGuideStyles } from "../../../../utils/styles/guideStyles";
-import InputField from "../../../common/input/InputField";
-import Card from "../../../common/card/Card";
-import Alert from "../../../common/alert/Alert";
-import { insertSlackToken } from "../../../../api/alarm/alarm";
-import { useAlertStore } from "../../../../stores/useAlertStore";
+import Modal from "@/components/common/modal/Modal";
+import GuideStep from "@/components/common/guide/GuideStep";
+import Button from "@/components/common/button/Button";
+import { slackGuideStyles } from "@/utils/styles/guideStyles";
+import InputField from "@/components/common/input/InputField";
+import Card from "@/components/common/card/Card";
+import Alert from "@/components/common/alert/Alert";
+import { insertSlackToken } from "@/api/alarm/alarm";
+import { useAlertStore } from "@/stores/useAlertStore";
+import { logger } from "@/utils/logger";
 
 export default function SlackGuideModal() {
   const [open, setOpen] = useState(false);
@@ -30,7 +31,7 @@ export default function SlackGuideModal() {
         message: "Slack Token and Channel ID have been saved successfully.",
       });
     } catch (err) {
-      console.error("Insert Slack Token Error:", err);
+      logger.error("Insert Slack Token Error:", err);
       addAlert({
         variant: "danger",
         title: "Error",

@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from "react";
 import { TabulatorFull as Tabulator } from "tabulator-tables";
 import "tabulator-tables/dist/css/tabulator.min.css"; // Tabulator 기본 CSS
 import * as XLSX from "xlsx";
-import Card from "../../../common/card/Card";
-import Button from "../../../common/button/Button";
-import { Icons } from "../../../../icons/Icons";
-import "../../../../index.css";
+import Card from "@/components/common/card/Card";
+import Button from "@/components/common/button/Button";
+import { Icons } from "@/icons/Icons";
+import "@/index.css";
 
 window.XLSX = XLSX;
 
@@ -15,7 +15,7 @@ export default function InvoiceTable({ invoice }) {
   const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
-    if (!tableRef.current) return;
+    if (!tableRef.current || !invoice) return;
 
     if (tabulatorInstance.current) {
       tabulatorInstance.current.replaceData(invoice);

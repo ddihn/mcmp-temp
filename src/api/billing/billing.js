@@ -1,27 +1,26 @@
-import { dashboardClient } from "../Client";
-import { USE_MOCK } from "../../config/env";
+import { dashboardClient, USE_MOCK } from "../Client";
 import { chartData, top5billData, billingAsset } from "../../config/mockData";
 
 // 이번달 요약 (지난달 대비)
 export const getCurMonthBill = (payload) => {
-  // if (USE_MOCK) {
-  //   return Promise.resolve({ data: chartData });
-  // }
+  if (USE_MOCK) {
+    return Promise.resolve({ data: chartData });
+  }
   return dashboardClient.post("/getCurMonthBill", payload);
 };
 
 // 이번달 상위 5개 리소스
 export const getTop5Bill = (payload) => {
-  // if (USE_MOCK) {
-  //   return Promise.resolve({ data: top5billData });
-  // }
+  if (USE_MOCK) {
+    return Promise.resolve({ data: top5billData });
+  }
   return dashboardClient.post("/getTop5Bill", payload);
 };
 
 // 이번달 서비스별 비용
 export const getBillAsset = (payload) => {
-  // if (USE_MOCK) {
-  //   return Promise.resolve({ data: billingAsset });
-  // }
+  if (USE_MOCK) {
+    return Promise.resolve({ data: billingAsset });
+  }
   return dashboardClient.post("/getBillAsset", payload);
 };

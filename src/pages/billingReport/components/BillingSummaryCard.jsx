@@ -1,8 +1,8 @@
-import Card from "../../../common/card/Card";
-import Grid from "../../../layout/Grid";
-import BarChart from "../../../common/chart/BarChart";
-import ChangeIndicator from "../../../common/indicator/ChangeIndicator";
-import { toBarChartData, formatYearMonth } from "../../../../utils/chartUtils";
+import Card from "@/components/common/card/Card";
+import Grid from "@/components/layout/Grid";
+import BarChart from "@/components/common/chart/BarChart";
+import ChangeIndicator from "@/components/common/indicator/ChangeIndicator";
+import { toBarChartData, formatYearMonth } from "@/utils/chartUtils";
 export default function BillingSummaryCard({ chartData }) {
   const { curYear, curMonth, momPer, momBill, curMonthBill, monthlyBill } =
     chartData;
