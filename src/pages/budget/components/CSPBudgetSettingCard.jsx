@@ -45,7 +45,7 @@ export default function CSPBudgetSettingCard({
   };
 
   return (
-    <Card title="CSP Budget Setting">
+    <Card title="CSP Budget Setting" titleSize={2}>
       <div className="table-responsive">
         <table className="table table-bordered">
           <thead>

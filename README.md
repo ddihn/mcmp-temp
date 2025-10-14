@@ -31,7 +31,7 @@ podman build --tls-verify=false -t suihnyoon/mc-costopti-ui:test .
 
 # 다른 개발자나 서버에서 사용할 경우 push
 
-podman push docker.io/suihnyoon/mc-costopti-ui:test
+podman push suihnyoon/mc-costopti-ui:test
 
 \*\* 이미지 저장소 변경 시, mc-cost-optimizer의 docker-compose.yml 에서 fe의 image 설정 변경
 
