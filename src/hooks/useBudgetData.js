@@ -53,6 +53,12 @@ export const useBudgetData = (year) => {
   useEffect(() => {
     const fetchBudgets = async () => {
       setLoading(true);
+
+      console.log("=== [Budget API] 조회 요청 ===");
+      console.log("year:", year);
+      console.log("⚠️ workspaceId/projectId 포함 여부 확인!");
+      console.log("====================================");
+
       try {
         const response = await getBudgetsByYear(year);
         const uiBudgets = transformApiToUiFormat(response.data);
@@ -82,6 +88,13 @@ export const useBudgetData = (year) => {
     try {
       setSaving(true);
       const payload = transformUiToApiFormat(cspBudgets, year, originalBudgets);
+
+      console.log("=== [Budget API] 저장 요청 Payload ===");
+      console.log("year:", year);
+      console.log("payload:", payload);
+      console.log("⚠️ workspaceId/projectId 포함 여부 확인!");
+      console.log("====================================");
+
       logger.info("Saving budget data:", payload);
 
       const res = await upsertBudgets(payload);
