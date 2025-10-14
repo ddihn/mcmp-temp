@@ -81,7 +81,7 @@ export const useBudgetData = (year) => {
   const saveBudgets = async () => {
     try {
       setSaving(true);
-      const payload = transformUiToApiFormat(cspBudgets, year);
+      const payload = transformUiToApiFormat(cspBudgets, year, originalBudgets);
       logger.info("Saving budget data:", payload);
 
       const res = await upsertBudgets(payload);
@@ -95,8 +95,19 @@ export const useBudgetData = (year) => {
         return false;
       } else {
         logger.info("Budget saved successfully");
-        // 성공 시 원본 데이터 업데이트
-        setOriginalBudgets(cspBudgets);
+
+        // 서버에서 저장된 최신 데이터 다시 가져오기
+        try {
+          const response = await getBudgetsByYear(year);
+          const uiBudgets = transformApiToUiFormat(response.data);
+          setCspBudgets(uiBudgets);
+          setOriginalBudgets(uiBudgets);
+        } catch (fetchError) {
+          logger.error("Failed to fetch updated budgets:", fetchError);
+          // 가져오기 실패 시에도 현재 데이터를 원본으로 유지
+          setOriginalBudgets(cspBudgets);
+        }
+
         addAlert({
           variant: "success",
           title: "Success",
