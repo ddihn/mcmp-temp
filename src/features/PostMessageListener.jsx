@@ -29,10 +29,10 @@ export default function PostMessageListener() {
       setUserToken("Null");
     };
 
-    // 전역에 저장된 초기 메시지 확인
+    // Check for initial message stored globally
     if (window.__INITIAL_POST_MESSAGE__) {
       const data = window.__INITIAL_POST_MESSAGE__;
-      console.log("✅ [PostMessage] 전역 메시지 감지, Store 설정", {
+      console.log("[PostMessage] Global message detected, setting Store", {
         workspaceId: data.workspaceInfo.name,
         workspaceName: data.workspaceInfo.name,
         projectId: data.projectInfo.ns_id,
@@ -54,7 +54,7 @@ export default function PostMessageListener() {
 
     function handleMessage(event) {
       if (event.data && event.data.accessToken) {
-        console.log("✅ [PostMessage] 새 메시지 수신, Store 업데이트", {
+        console.log("[PostMessage] New message received, updating Store", {
           workspaceId: event.data.workspaceInfo.name,
           workspaceName: event.data.workspaceInfo.name,
           projectId: event.data.projectInfo.ns_id,
@@ -78,28 +78,10 @@ export default function PostMessageListener() {
 
     window.addEventListener("message", handleMessage);
 
-    // 개발 모드에서 자동으로 더미 데이터 전송
-    if (import.meta.env.MODE === "development") {
-      setTimeout(() => {
-        window.postMessage(
-          {
-            accessToken: "dummy-token",
-            workspaceInfo: { id: "ws01", name: "Test Workspace" },
-            projectInfo: {
-              ns_id: "ns01",
-              id: "mock-uuid",
-              name: "Test Project",
-            },
-          },
-          "*"
-        );
-      }, 1000);
-    }
-
-    // 메시지가 일정 시간 내에 오지 않으면 fallback 데이터 설정
+    // Set fallback data if message is not received within timeout
     const fallbackTimeout = setTimeout(() => {
       if (!messageReceived) {
-        setDefaultValues("메시지가 오지 않아 기본값 적용");
+        setDefaultValues("No message received, applying default values");
       }
     }, 3000);
 
