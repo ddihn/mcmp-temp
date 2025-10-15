@@ -8,10 +8,34 @@ export default function PostMessageListener() {
   const setUserToken = useProjectStore((s) => s.setUserToken);
 
   useEffect(() => {
+    let messageReceived = false;
+
+    // 디버깅 정보 출력
+    console.log("=== [PostMessage] 초기화 정보 ===");
+    console.log("현재 origin:", window.location.origin);
+    console.log("부모 window 존재:", window.parent !== window);
+    console.log("top window 존재:", window.top !== window);
+    console.log("====================================");
+
+    // 기본값 설정 함수
+    const setDefaultValues = (reason) => {
+      console.warn(`⚠️ [PostMessage] ${reason}`);
+      logger.warn(reason);
+      setWorkspace("ws01", "testWs");
+      setProject("ns01", "mock-uuid", "default-project");
+      setUserToken("Null");
+    };
+
     function handleMessage(event) {
+      console.log("=== [PostMessage] 모든 메시지 수신 ===");
+      console.log("event.origin:", event.origin);
+      console.log("event.data:", event.data);
+      console.log("====================================");
+
       logger.debug("message received:", event);
 
       if (event.data && event.data.accessToken) {
+        messageReceived = true;
         console.log("=== [PostMessage] 외부에서 받은 데이터 ===");
         console.log("accessToken:", event.data.accessToken);
         console.log("workspaceInfo:", event.data.workspaceInfo);
@@ -37,16 +61,20 @@ export default function PostMessageListener() {
         console.log("projectName:", event.data.projectInfo.name);
         console.log("====================================");
       } else {
-        console.warn("⚠️ [PostMessage] 프로젝트 코드가 없어서 임시 값 적용");
-        logger.warn("프로젝트 코드가 없어서 임시 값 적용");
-        setWorkspace("ws01", "testWs");
-        setProject("ns01", "mock-uuid", "undefined");
-        setUserToken("Null");
+        messageReceived = true;
+        setDefaultValues("프로젝트 코드가 없어서 기본값 적용");
       }
     }
 
     window.addEventListener("message", handleMessage);
 
+    // 부모 window에 준비 완료 신호 보내기 (데이터 재전송 요청)
+    if (window.parent !== window) {
+      console.log("=== [PostMessage] 부모에게 준비 완료 신호 전송 ===");
+      window.parent.postMessage({ type: "CHILD_READY" }, "*");
+    }
+
+    // 개발 모드에서 자동으로 더미 데이터 전송
     if (import.meta.env.MODE === "development") {
       setTimeout(() => {
         window.postMessage(
@@ -64,8 +92,16 @@ export default function PostMessageListener() {
       }, 1000);
     }
 
+    // 메시지가 일정 시간 내에 오지 않으면 fallback 데이터 설정
+    const fallbackTimeout = setTimeout(() => {
+      if (!messageReceived) {
+        setDefaultValues("메시지가 오지 않아 기본값 적용");
+      }
+    }, 3000); // 3초 대기
+
     return () => {
       window.removeEventListener("message", handleMessage);
+      clearTimeout(fallbackTimeout);
     };
   }, [setWorkspace, setProject, setUserToken]);
 
