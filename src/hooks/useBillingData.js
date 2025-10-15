@@ -27,10 +27,16 @@ export const useBillingData = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // projectId와 workspaceId가 없으면 API 요청하지 않음
+    if (!projectId || !workspaceId) {
+      console.log("⏳ [Billing API] Store 데이터 대기 중...");
+      return;
+    }
+
     const fetchBillingData = async () => {
       const req = {
         today: new Date().toISOString().slice(0, 10).replace(/-/g, ""),
-        selectedProjects: [projectId ?? "mock-proj"],
+        selectedProjects: [projectId],
         selectedCsps: ["AWS", "AZURE", "NCP"],
         selectedWorkspace: workspaceId,
       };

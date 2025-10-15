@@ -27,12 +27,18 @@ export const useInvoiceData = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // projectId와 workspaceId가 없으면 API 요청하지 않음
+    if (!projectId || !workspaceId) {
+      console.log("⏳ [Invoice API] Store 데이터 대기 중...");
+      return;
+    }
+
     const fetchInvoiceData = async () => {
       const req = {
         today: new Date().toISOString().slice(0, 10).replace(/-/g, ""),
-        selectedProjects: [projectId ?? "ns01"],
+        selectedProjects: [projectId],
         selectedCsps: ["AWS", "AZURE", "NCP"],
-        selectedWorkspace: workspaceId ?? "ws01",
+        selectedWorkspace: workspaceId,
       };
 
       console.log("=== [Invoice API] 요청 Payload ===");

@@ -20,11 +20,17 @@ export const useAlarmHistory = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // projectId와 workspaceId가 없으면 API 요청하지 않음
+    if (!projectId || !workspaceId) {
+      console.log("⏳ [Alarm API] Store 데이터 대기 중...");
+      return;
+    }
+
     const fetchAlarmHistory = async () => {
       const req = {
         selectedCsps: ["AWS", "AZURE", "NCP"],
-        selectedWorkspace: workspaceId ?? "ws01",
-        selectedProjects: [projectId ?? "ns01"],
+        selectedWorkspace: workspaceId,
+        selectedProjects: [projectId],
       };
 
       console.log("=== [Alarm API] 요청 Payload ===");
